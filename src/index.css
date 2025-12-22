@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.cdnfonts.com/css/impact');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #9013FE;
+  --color-lavender: #F5EBFF;
+  --color-mint: #E2FBE2;
+  --color-cream: #FFF0F5;
+  --color-yellow: #F7FF5D;
+  
+  --font-heading: 'Impact', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+}
