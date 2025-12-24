@@ -1,85 +1,126 @@
-import React, { useState } from 'react';
-import { ArrowRight, Star, Zap, Shield, Users } from 'lucide-react';
+import React from "react";
+import { Zap, Star, Shield } from "lucide-react";
+import { tabs } from "../data/data.js";
+import { useLocation } from "react-router-dom";
+import Marquee from "react-fast-marquee";
 
-const Hero = () => {
-  const [activeTab, setActiveTab] = useState('users'); // 'users' or 'brands'
+const carouselImages = [
+  "https://placehold.co/150x80?text=Brand+1",
+  "https://placehold.co/150x80?text=Brand+2",
+  "https://placehold.co/150x80?text=Brand+3",
+  "https://placehold.co/150x80?text=Brand+4",
+  "https://placehold.co/150x80?text=Brand+5",
+  "https://placehold.co/150x80?text=Brand+6",
+  "https://placehold.co/150x80?text=Brand+7",
+  "https://placehold.co/150x80?text=Brand+8",
+  "https://placehold.co/150x80?text=Brand+8",
+  "https://placehold.co/150x80?text=Brand+8",
+];
 
+const Hero = ({ viewMode, setViewMode }) => {
+  const location = useLocation();
   return (
-    <section className="relative overflow-hidden bg-white pt-10 pb-20 sm:pt-16 sm:pb-24">
-      {/* Background Blobs (Optional for flare) */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-mint rounded-full blur-3xl opacity-40"></div>
+    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-24 w-ful">
+      <div className="  px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div className="max-w-7xl mx-auto">
+          <div className=" inline-flex items-center bg-gray-100 p-1.5 rounded-full mb-8 shadow-inner gap-3">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setViewMode(tab.viewMode)}
+                className={`flex items-center justify-center cursor-pointer
+           px-1 py-4 gap-1 w-full
+           text-sm font-bold font-[manrope]
+           rounded-full ${
+             viewMode === tab.viewMode
+               ? "bg-[#111111] shadow-md text-gray-900 shadow-[0px_2px_4px_0px_#0000001A]"
+               : "text-gray-500 hover:text-gray-700"
+           }`}
+              >
+                <img src={tab.icon} className="w-6 mr-2" alt={tab.title} />
+                <span
+                  className="bg-gradient-to-r from-[#ECD6FF] to-[#FF8687]
+             bg-clip-text text-nowrap text-transparent
+             transition-colors duration-300"
+                >
+                  {tab.title}
+                </span>
+              </button>
+            ))}
+          </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        
-        {/* Toggle Switch */}
-        <div className="inline-flex items-center bg-gray-100 p-1.5 rounded-full mb-8 shadow-inner">
-          <button
-            onClick={() => setActiveTab('users')}
-            className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
-              activeTab === 'users' ? 'bg-white shadow-md text-gray-900' : 'text-gray-500 hover:text-gray-700'
-            }`}
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading text-black leading-[0.95] tracking-tight mb-8 max-w-6xl mx-auto uppercase">
+            {viewMode === "users" ? (
+              <>
+                YOUR{" "}
+                <span className="relative inline-block px-8 py-0 mx-2 bg-gradient-to-r from-pink-400 to-purple-400 text-white rounded-full transform -skew-x-6">
+                  SMART
+                </span>{" "}
+                SPACE TO MANAGE YOUR DIGITAL LIFE AND BE REWARDED
+              </>
+            ) : (
+              <>
+                GROW YOUR{" "}
+                <span className="relative inline-block px-8 py-0 mx-2 bg-gradient-to-r from-blue-400 to-indigo-500 text-white rounded-full transform -skew-x-6">
+                  BRAND
+                </span>{" "}
+                WITH THE FLOWVA ECOSYSTEM
+              </>
+            )}
+          </h1>
+
+          {/* CTA Buttons */}
+          <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              class={` font-manrope text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1 ${
+                viewMode === "users"
+                  ? "bg-white"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } `}
+            >
+              <div class="cursor-pointer h-full flex items-center justify-center px-10 py-5  w-full whitespace-nowrap rounded-[100px] relative bg-[#111111] hover:bg-[#b362fae3] transition-all ease-linear duration-200 text-white shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset]">
+                {viewMode === "users"
+                  ? "Start Earning Today"
+                  : "Partner With Us"}
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Dual Carousel */}
+        <div className="mt-16 space-y-8 fade-mask ">
+          {/* Row 1: Left */}
+          <Marquee gradient={true} gradientColor="white" speed={50}>
+            {carouselImages.map((img, index) => (
+              <div key={`l-${index}`} className="mx-8">
+                <img
+                  src={img}
+                  alt={`brand-${index}`}
+                  className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                />
+              </div>
+            ))}
+          </Marquee>
+
+          {/* Row 2: Right */}
+          <Marquee
+            direction="right"
+            gradient={true}
+            gradientColor="white"
+            speed={50}
           >
-            For users
-          </button>
-          <button
-            onClick={() => setActiveTab('brands')}
-            className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
-              activeTab === 'brands' ? 'bg-white shadow-md text-gray-900' : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            For brands
-          </button>
+            {carouselImages.map((img, index) => (
+              <div key={`r-${index}`} className="mx-8">
+                <img
+                  src={img}
+                  alt={`brand-${index}`}
+                  className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                />
+              </div>
+            ))}
+          </Marquee>
         </div>
-
-        {/* Headline */}
-        <h1 className="text-5xl sm:text-7xl md:text-8xl font-heading text-black leading-[0.95] tracking-tight mb-6 max-w-5xl mx-auto">
-          DISCOVER & SHARE <br className="hidden md:block" />
-          <span className="text-primary italic relative">
-             TOP TOOLS
-            <svg className="absolute w-full h-3 -bottom-1 left-0 text-yellow opacity-50 z-[-1]" viewBox="0 0 200 9" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C25.7509 2.1932 73.2505 1.50346 195 2.00007" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/></svg>
-          </span>
-          {' '}WITH EASE
-        </h1>
-
-        {/* Subtitle */}
-        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500 font-medium font-body leading-relaxed">
-          The ultimate hub to organize your digital life, discover new tools, and get rewarded for your workflow. Join thousands of productive users today.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-xl shadow-primary/30 hover:scale-105 transition-transform flex items-center justify-center gap-2">
-            Get Started Free
-            <ArrowRight className="w-5 h-5" />
-          </button>
-          <button className="w-full sm:w-auto px-8 py-4 bg-gray-100 text-gray-900 rounded-xl font-bold text-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-            <div className="flex -space-x-2">
-               <div className="w-6 h-6 rounded-full bg-blue-400 border-2 border-white"></div>
-               <div className="w-6 h-6 rounded-full bg-green-400 border-2 border-white"></div>
-               <div className="w-6 h-6 rounded-full bg-red-400 border-2 border-white"></div>
-            </div>
-            Join Community
-          </button>
-        </div>
-
-        {/* Floating Icons (Decorative) */}
-        <div className="absolute top-1/4 left-0 hidden lg:block animate-bounce duration-[3000ms]">
-          <div className="w-16 h-16 bg-white rounded-2xl shadow-2xl flex items-center justify-center transform -rotate-12 border border-gray-100">
-             <Zap className="w-8 h-8 text-yellow-500" fill="currentColor" />
-          </div>
-        </div>
-        <div className="absolute top-1/3 right-10 hidden lg:block animate-pulse duration-[4000ms]">
-          <div className="w-14 h-14 bg-white rounded-full shadow-2xl flex items-center justify-center transform rotate-12 border border-gray-100">
-             <Star className="w-6 h-6 text-primary" fill="currentColor" />
-          </div>
-        </div>
-         <div className="absolute bottom-10 left-20 hidden lg:block animate-bounce duration-[5000ms]">
-          <div className="w-20 h-20 bg-white rounded-2xl shadow-2xl flex items-center justify-center transform rotate-6 border border-gray-100">
-             <Shield className="w-8 h-8 text-mint-600" />
-          </div>
-        </div>
-
       </div>
     </section>
   );

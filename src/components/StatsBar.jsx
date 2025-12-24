@@ -1,18 +1,29 @@
-import React from 'react';
+import React from "react";
 
-const StatsBar = () => {
-  const stats = [
-    { label: 'Users', value: '10,000+' },
-    { label: 'Tools', value: '200+' },
-    { label: 'Countries', value: '25+' },
+const StatsBar = ({ viewMode }) => {
+  const userStats = [
+    { label: "Users", value: "10,000+" },
+    { label: "Tools", value: "200+" },
+    { label: "Countries", value: "25+" },
   ];
+
+  const brandStats = [
+    { label: "Partner Brands", value: "500+" },
+    { label: "Campaigns", value: "1,200+" },
+    { label: "Monthly Reach", value: "2M+" },
+  ];
+
+  const stats = viewMode === "brands" ? brandStats : userStats;
 
   return (
     <section className="bg-lavender py-12 border-y border-purple-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-purple-200">
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center pt-8 md:pt-0 px-4">
+            <div
+              key={stat.label}
+              className="text-center pt-8 md:pt-0 px-4 animate-fade-in-up"
+            >
               <div className="text-4xl sm:text-5xl font-heading text-primary bg-clip-text">
                 {stat.value}
               </div>
