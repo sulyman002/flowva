@@ -17,7 +17,7 @@ const Home = () => {
     <>
       <Hero viewMode={viewMode} setViewMode={setViewMode} />
       {/* <StatsBar viewMode={viewMode} /> */}
-      <Productivity />
+      <Productivity viewMode={viewMode}/>
       <Features viewMode={viewMode} />
       <Benefits viewMode={viewMode} />
       <HowItWorks viewMode={viewMode} />

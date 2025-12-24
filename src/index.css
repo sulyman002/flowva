@@ -11,4 +11,18 @@
   
   --font-heading: 'Impact', sans-serif;
   --font-body: 'Manrope', sans-serif;
+
+}
+
+.flip-card {
+perspective: 1200px;
+}
+
+.flip-card-inner {
+transition: transform 0.6s;
+transform-style: preserve-3d;
+}
+
+.backface-hidden {
+backface-visibility: hidden;
 }

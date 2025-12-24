@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Layers, Search, Gift } from "lucide-react";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
+import AmplifySuccess from "./AmplifySuccess";
 
 gsap.registerPlugin(Draggable);
 
@@ -197,83 +198,89 @@ const Features = ({ viewMode }) => {
   }, [activeIndex, features, nextSlide, prevSlide]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-20 overflow-hidden transition-colors duration-500" // added duration just in case
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-heading text-black mb-4 uppercase">
-            {viewMode === "brands"
-              ? "POWERFUL TOOLS FOR GROWTH"
-              : "EVERYTHING IN ONE PLACE"}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {viewMode === "brands"
-              ? "Scale your product with precision tools designed for modern marketing teams."
-              : "Stop switching between tabs. Consolidate your workflow."}
-          </p>
-        </div>
-
-        {/* Carousel Container */}
-        <div
-          ref={containerRef}
-          className="relative h-[450px] w-full flex justify-center items-center touch-pan-y"
-          style={{ perspective: "1000px" }}
+    <>
+      {viewMode === "users" ? (
+        <section
+          ref={sectionRef}
+          className="py-20 overflow-hidden transition-colors duration-500" // added duration just in case
         >
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              ref={addToRefs}
-              onClick={() => {
-                setActiveIndex(index);
-                resetTimer();
-              }}
-              className="absolute w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-gray-100 flex flex-col items-start h-[400px] cursor-pointer backface-hidden"
-              style={{
-                top: "50%",
-                left: "50%",
-                xPercent: -50,
-                yPercent: -50,
-              }}
-            >
-              <div
-                className={`w-16 h-16 ${feature.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}
-              >
-                {feature.icon}
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3 font-heading">
-                {feature.title}
-              </h3>
-              <p className="text-gray-500 leading-relaxed mb-auto">
-                {feature.description}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl md:text-5xl font-heading text-black mb-4 uppercase">
+                {viewMode === "brands"
+                  ? "POWERFUL TOOLS FOR GROWTH"
+                  : "EVERYTHING IN ONE PLACE"}
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                {viewMode === "brands"
+                  ? "Scale your product with precision tools designed for modern marketing teams."
+                  : "Stop switching between tabs. Consolidate your workflow."}
               </p>
-              <div className="mt-6 text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all">
-                Learn more &rarr;
-              </div>
             </div>
-          ))}
-        </div>
 
-        {/* Indicators */}
-        <div className="flex justify-center gap-2 mt-8">
-          {features.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setActiveIndex(idx);
-                resetTimer();
-              }}
-              className={`h-3 rounded-full transition-all duration-300 ${
-                activeIndex === idx
-                  ? "bg-black w-6"
-                  : "bg-gray-400/50 w-3 hover:bg-gray-400"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+            {/* Carousel Container */}
+            <div
+              ref={containerRef}
+              className="relative h-[450px] w-full flex justify-center items-center touch-pan-y"
+              style={{ perspective: "1000px" }}
+            >
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  ref={addToRefs}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    resetTimer();
+                  }}
+                  className="absolute w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-gray-100 flex flex-col items-start h-[400px] cursor-pointer backface-hidden"
+                  style={{
+                    top: "50%",
+                    left: "50%",
+                    xPercent: -50,
+                    yPercent: -50,
+                  }}
+                >
+                  <div
+                    className={`w-16 h-16 ${feature.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}
+                  >
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3 font-heading">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed mb-auto">
+                    {feature.description}
+                  </p>
+                  <div className="mt-6 text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                    Learn more &rarr;
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Indicators */}
+            <div className="flex justify-center gap-2 mt-8">
+              {features.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setActiveIndex(idx);
+                    resetTimer();
+                  }}
+                  className={`h-3 rounded-full transition-all duration-300 ${
+                    activeIndex === idx
+                      ? "bg-black w-6"
+                      : "bg-gray-400/50 w-3 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <AmplifySuccess />
+      )}
+    </>
   );
 };
 
