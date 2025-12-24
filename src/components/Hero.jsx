@@ -3,6 +3,7 @@ import { Zap, Star, Shield } from "lucide-react";
 import { tabs } from "../data/data.js";
 import { useLocation } from "react-router-dom";
 import Marquee from "react-fast-marquee";
+import { setItem } from "../utils/localStorage.js";
 
 const carouselImages = [
   "https://placehold.co/150x80?text=Brand+1",
@@ -20,16 +21,19 @@ const carouselImages = [
 const Hero = ({ viewMode, setViewMode }) => {
   const location = useLocation();
   return (
-    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-24 w-ful">
+    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-24 w-full">
       <div className="  px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <div className="max-w-7xl mx-auto">
-          <div className=" inline-flex items-center bg-gray-100 p-1.5 rounded-full mb-8 shadow-inner gap-3">
+          <div className=" inline-flex items-center bg-gray-100 p-1 rounded-full mb-8 shadow-inner gap-3">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setViewMode(tab.viewMode)}
+                onClick={() => {
+                  setViewMode(tab.viewMode);
+                  setItem("tab", tab.viewMode);
+                }}
                 className={`flex items-center justify-center cursor-pointer
-           px-1 py-4 gap-1 w-full
+           px-3 py-5 gap-1 w-full
            text-sm font-bold font-[manrope]
            rounded-full ${
              viewMode === tab.viewMode
