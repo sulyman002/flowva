@@ -228,16 +228,15 @@ const HowItWorks = ({ viewMode }) => {
             {steps.map((_, idx) => (
               <div
                 key={idx}
-                className="relative h-2 rounded-full bg-gray-300 w-12 overflow-hidden"
+                className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
+                  idx === activeStep ? "w-12 bg-gray-300" : "w-2 bg-black"
+                }`}
               >
                 {idx === activeStep && (
                   <div
                     className="absolute top-0 left-0 h-full bg-black transition-all duration-100 ease-linear"
                     style={{ width: `${progress}%` }}
                   ></div>
-                )}
-                {idx < activeStep && (
-                  <div className="absolute top-0 left-0 h-full w-full bg-black"></div>
                 )}
               </div>
             ))}

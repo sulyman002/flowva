@@ -5,6 +5,10 @@ import Productivity from "../components/Productivity";
 import Features from "../components/Features";
 import Benefits from "../components/Benefits";
 import HowItWorks from "../components/HowItWorks";
+import GrowthCommunity from "../components/GrowthCommunity";
+import FAQ from "../components/FAQ";
+import StayProductive from "../components/StayProductive";
+import Footer from "../components/Footer";
 import { getItem } from "../utils/localStorage";
 
 const Home = () => {
@@ -17,6 +21,9 @@ const Home = () => {
       <Features viewMode={viewMode} />
       <Benefits viewMode={viewMode} />
       <HowItWorks viewMode={viewMode} />
+      <GrowthCommunity />
+      <FAQ />
+      <StayProductive />
     </>
   );
 };
