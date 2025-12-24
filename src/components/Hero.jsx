@@ -4,18 +4,27 @@ import { tabs } from "../data/data.js";
 import { useLocation } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { setItem } from "../utils/localStorage.js";
+import asana from "../assets/asana.svg";
+import chatgpt from "../assets/chatgpt.svg"
+import coin from "../assets/coin.svg"
+import framer from "../assets/framer.svg"
+import google from "../assets/google.svg"
+import vsCode from "../assets/vs_code.svg"
+import zoom from "../assets/zoom.svg" 
 
 const carouselImages = [
-  "https://placehold.co/150x80?text=Brand+1",
-  "https://placehold.co/150x80?text=Brand+2",
-  "https://placehold.co/150x80?text=Brand+3",
-  "https://placehold.co/150x80?text=Brand+4",
-  "https://placehold.co/150x80?text=Brand+5",
-  "https://placehold.co/150x80?text=Brand+6",
-  "https://placehold.co/150x80?text=Brand+7",
-  "https://placehold.co/150x80?text=Brand+8",
-  "https://placehold.co/150x80?text=Brand+8",
-  "https://placehold.co/150x80?text=Brand+8",
+  asana,
+  coin,
+  chatgpt,
+  coin,
+  framer,
+ coin,
+  google,
+  coin,
+  vsCode,
+  coin,
+  zoom,
+  coin
 ];
 
 const Hero = ({ viewMode, setViewMode }) => {
@@ -101,7 +110,7 @@ const Hero = ({ viewMode, setViewMode }) => {
                 <img
                   src={img}
                   alt={`brand-${index}`}
-                  className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                  className="h-24 w-auto  hover:opacity-100 transition-opacity "
                 />
               </div>
             ))}
@@ -119,7 +128,7 @@ const Hero = ({ viewMode, setViewMode }) => {
                 <img
                   src={img}
                   alt={`brand-${index}`}
-                  className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                  className="h-24 w-auto  hover:opacity-100 transition-opacity "
                 />
               </div>
             ))}
