@@ -24,20 +24,23 @@ export const AuthProvider = ({ children }) => {
   // Helper to update local state logic based on user ID
   const updateOnboardingState = async (userId) => {
     // 1. Check Local Storage First
-    const localData = getItem("flowva_onboarding");
-    if (localData && localData.completed && localData.userId === userId) {
-      console.log("Onboarding status found in local storage");
+    const hasProfile = getItem("hasProfile");
+    const storedProfileId = getItem("profileId");
+
+    if (hasProfile && storedProfileId === userId) {
+      console.log("Onboarding status found in local storage (strict mode)");
       setOnboardingComplete(true);
       return true;
     }
 
-    // 2. Fallback to Server Check
+    // 2. Fallback to Server Check (Only if not found locally)
     const status = await supabaseCheckOnboarding(userId);
     setOnboardingComplete(status);
 
     // Sync to local if true
     if (status) {
-      setItem("flowva_onboarding", { completed: true, userId });
+      setItem("hasProfile", true);
+      setItem("profileId", userId);
     }
 
     return status;
@@ -47,15 +50,28 @@ export const AuthProvider = ({ children }) => {
     // Check active session
     const initSession = async () => {
       try {
+        // Optimistic check: if we have local flags, we might want to unblock loading earlier?
+        // For now, let's keep it safe and wait for session, but trust local profile status.
+
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        setSession(session);
-        setUser(session?.user ?? null);
+
         if (session?.user) {
+          setSession(session);
+          setUser(session.user);
+          setItem("authenticated", true); // Ensure this is set
           await updateOnboardingState(session.user.id);
         } else {
+          // No session
+          setSession(null);
+          setUser(null);
           setOnboardingComplete(false);
+          // Don't clear authenticated here immediately to avoid flickering if it's just a lag?
+          // No, if getSession returns null, we are likely out.
+          removeItem("authenticated");
+          removeItem("hasProfile");
+          removeItem("profileId");
         }
       } catch (error) {
         console.error("Error initializing session:", error);
@@ -69,14 +85,23 @@ export const AuthProvider = ({ children }) => {
     // Listen for changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth event:", event);
       setSession(session);
       setUser(session?.user ?? null);
+
       if (session?.user) {
+        setItem("authenticated", true);
         await updateOnboardingState(session.user.id);
-      } else {
+      } else if (event === "SIGNED_OUT") {
         setOnboardingComplete(false);
+        removeItem("authenticated");
+        removeItem("hasProfile");
+        removeItem("profileId");
+        removeItem("flowva_onboarding"); // Cleanup old one too just in case
+        removeItem("sidebar_open"); // Optional: clear UI state
       }
+
       setLoading(false);
     });
 
@@ -86,14 +111,22 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signUp = async (email, password) => {
+    // We don't set authenticated = true here usually until they verify or auto-sign-in happens
     return supabaseSignUp(email, password);
   };
 
   const signIn = async (email, password) => {
-    return supabaseSignIn(email, password);
+    const result = await supabaseSignIn(email, password);
+    if (!result.error) {
+      setItem("authenticated", true);
+    }
+    return result;
   };
 
   const signOut = async () => {
+    removeItem("authenticated");
+    removeItem("hasProfile");
+    removeItem("profileId");
     removeItem("flowva_onboarding");
     return supabaseSignOut();
   };
@@ -110,10 +143,8 @@ export const AuthProvider = ({ children }) => {
     signUp,
     signIn,
     signOut,
-    signIn,
-    signOut,
     checkOnboardingStatus,
-    setOnboardingComplete, // Exposed for manual updates (e.g. optimistic UI or RLS bypass)
+    setOnboardingComplete,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

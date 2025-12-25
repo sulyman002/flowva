@@ -2,16 +2,21 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import PageLoader from "../components/PageLoader";
+import { getItem } from "../utils/localStorage";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading, onboardingComplete } = useAuth();
   const location = useLocation();
 
-  /* if (loading) {
+  if (loading) {
     return <PageLoader />;
-  } */
+  }
 
-  if (!user) {
+  // Check both context user and persistent authenticated state
+  // This prevents redirecting to login during the split second where user might be null but we know we are logged in.
+  const isAuthenticated = user || getItem("authenticated");
+
+  if (!isAuthenticated) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 

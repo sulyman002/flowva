@@ -9,7 +9,7 @@ const DashboardHome = () => {
     user?.user_metadata?.first_name || user?.email?.split("@")[0] || "User";
 
   return (
-    <div className="w-full max-w-5xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       {/* Page Header (Sticky) */}
       <div className="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm pt-2 pb-4 flex items-center justify-between">
         <h1 className="text-xl md:text-2xl font-bold text-gray-900">

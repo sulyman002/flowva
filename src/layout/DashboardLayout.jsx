@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { Menu, Bell } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { getItem, setItem } from "../utils/localStorage";
 
 const DashboardLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // Initialize from local storage, default to false
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    return getItem("sidebar_open") || false;
+  });
+
   const { user } = useAuth();
+
+  // Persist sidebar state changes
+  useEffect(() => {
+    setItem("sidebar_open", isSidebarOpen);
+  }, [isSidebarOpen]);
 
   // Get first name safely
   const firstName = user?.user_metadata?.first_name || "Pulsepoint";

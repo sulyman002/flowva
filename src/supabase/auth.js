@@ -44,7 +44,7 @@ export const checkOnboardingStatus = async (userId) => {
   try {
     const { data, error } = await supabase
       .from("profiles")
-      .select("onboarding_completed")
+      .select("onboarding_complete")
       .eq("id", userId)
       .single();
 
@@ -53,7 +53,7 @@ export const checkOnboardingStatus = async (userId) => {
       return false;
     }
 
-    return data?.onboarding_completed || false;
+    return data?.onboarding_complete || false;
   } catch (error) {
     console.error("Unexpected error checking onboarding:", error);
     return false;

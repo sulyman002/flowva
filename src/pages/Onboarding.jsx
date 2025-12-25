@@ -74,7 +74,7 @@ const Onboarding = () => {
       const upsertPromise = supabase.from("profiles").upsert(
         {
           id: user.id,
-          onboarding_completed: true,
+          onboarding_complete: true,
           goal: formData.goal,
           focus: formData.focus,
           tools: formData.tools,
@@ -115,12 +115,14 @@ const Onboarding = () => {
       }
 
       // Success! Save locally as well
-      setItem("flowva_onboarding", {
-        completed: true,
-        userId: user.id,
-        first_name: formData.firstName,
-        ...formData,
-      });
+      // Success! Save locally as well
+      setItem("hasProfile", true);
+      setItem("profileId", user.id);
+
+      // Keep the old one for now if you want to store form data, or remove it if not needed.
+      // User requested "persist the hasProfile too to know the info"
+      // Let's store the full object in a separate key if we want to restore form state, but strict auth relies on hasProfile
+
       // Ensure context is updated
       setOnboardingComplete(true);
 
@@ -139,12 +141,9 @@ const Onboarding = () => {
         );
 
         // Save locally to prevent loop on reload
-        setItem("flowva_onboarding", {
-          completed: true,
-          userId: user.id,
-          first_name: formData.firstName,
-          ...formData,
-        });
+        setItem("hasProfile", true);
+        setItem("profileId", user.id);
+
         setOnboardingComplete(true);
 
         setTimeout(() => {
