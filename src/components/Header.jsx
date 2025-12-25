@@ -16,9 +16,19 @@ import {
   Share2,
 } from "lucide-react";
 
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 const Header = () => {
+  const { user, signOut, onboardingComplete } = useAuth();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login");
+  };
 
   const navLinks = [
     {
@@ -185,19 +195,43 @@ const Header = () => {
             </span>
           </div>
 
-          {/* Auth Buttons Container */}
           <div className="hidden md:flex items-center gap-4 ">
-            <button className="w-[84px] h-[40px] text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1 cursor-pointer">
-              <div className="h-full w-full flex justify-center items-center px-[16px] transition-all ease-linear duration-200 rounded-[100px] bg-white hover:bg-[#111111] hover:shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset] hover:text-white relative shadow-[0px_2px_4px_0px_#0000001A]">
-                Login
+            {user ? (
+              <div className="flex items-center gap-4">
+                <Link
+                  to={onboardingComplete ? "/dashboard" : "/onboarding"}
+                  className="text-sm font-medium text-gray-700 hover:text-primary"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-[100px] h-[40px] text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1 cursor-pointer"
+                >
+                  <div className="h-full w-full flex justify-center items-center px-[16px] transition-all ease-linear duration-200 rounded-[100px] bg-white hover:bg-[#111111] hover:text-white relative shadow-sm">
+                    Sign Out
+                  </div>
+                </button>
               </div>
-            </button>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="w-[84px] h-[40px] text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1 cursor-pointer">
+                    <div className="h-full w-full flex justify-center items-center px-[16px] transition-all ease-linear duration-200 rounded-[100px] bg-white hover:bg-[#111111] hover:shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset] hover:text-white relative shadow-[0px_2px_4px_0px_#0000001A]">
+                      Login
+                    </div>
+                  </button>
+                </Link>
 
-            <button className="w-[84px] font-manrope h-[40px] text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1">
-              <div className="cursor-pointer h-full flex items-center justify-center  w-full whitespace-nowrap px-[16px] rounded-[100px] relative bg-[#111111] hover:bg-[#b362fae3] transition-all ease-linear duration-200 text-white shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset]">
-                Sign up
-              </div>
-            </button>
+                <Link to="/signup">
+                  <button className="w-[84px] font-manrope h-[40px] text-sm font-bold border-[#9013FE1A] rounded-[100px] border p-1">
+                    <div className="cursor-pointer h-full flex items-center justify-center  w-full whitespace-nowrap px-[16px] rounded-[100px] relative bg-[#111111] hover:bg-[#b362fae3] transition-all ease-linear duration-200 text-white shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset]">
+                      Sign up
+                    </div>
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -266,12 +300,32 @@ const Header = () => {
               </a>
             ))}
             <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col gap-4">
-              <button className="w-full text-center py-2 font-semibold text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
-                Log in
-              </button>
-              <button className="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg">
-                Sign up
-              </button>
+              {user ? (
+                <>
+                  <span className="text-center text-gray-600 text-sm">
+                    Signed in as {user.email}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-center py-2 font-semibold text-gray-900 border border-gray-200 rounded-lg bg-gray-50"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="w-full">
+                    <button className="w-full text-center py-2 font-semibold text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
+                      Log in
+                    </button>
+                  </Link>
+                  <Link to="/signup" className="w-full">
+                    <button className="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg">
+                      Sign up
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

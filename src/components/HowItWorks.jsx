@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Play, Pause, Check } from "lucide-react";
+import GrowthPlan from "./GrowthPlan";
 
 const HowItWorks = ({ viewMode }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -133,117 +134,125 @@ const HowItWorks = ({ viewMode }) => {
   }, [isPlaying, steps.length]);
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-black uppercase mb-4">
-            SIMPLE, REWARDING, CALM
-          </h2>
-        </div>
+    <>
+      {viewMode === "users" ? (
+        <section className="py-24 bg-white overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black text-black uppercase mb-4">
+                SIMPLE, REWARDING, CALM
+              </h2>
+            </div>
 
-        {/* Carousel Container */}
-        <div className="flex flex-col lg:flex-row gap-6 h-[600px] lg:h-[500px]">
-          {steps.map((step, index) => {
-            const isActive = index === activeStep;
-            return (
-              <div
-                key={step.id}
-                onClick={() => {
-                  setActiveStep(index);
-                  setProgress(0);
-                  setIsPlaying(false); // Pause on manual interaction? Or keep playing? User said "when they pause it would be paused".
-                  // Let's keep playing or let controls handle. Usually manual click resets timer.
-                  // I'll keep playing but reset progress for smooth UX, or strictly follow pause button.
-                  // User request: "when they pause it would be paused". Currently clicking just sets active.
-                }}
-                className={`relative rounded-3xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer
+            {/* Carousel Container */}
+            <div className="flex flex-col lg:flex-row gap-6 h-[600px] lg:h-[500px]">
+              {steps.map((step, index) => {
+                const isActive = index === activeStep;
+                return (
+                  <div
+                    key={step.id}
+                    onClick={() => {
+                      setActiveStep(index);
+                      setProgress(0);
+                      setIsPlaying(false); // Pause on manual interaction? Or keep playing? User said "when they pause it would be paused".
+                      // Let's keep playing or let controls handle. Usually manual click resets timer.
+                      // I'll keep playing but reset progress for smooth UX, or strictly follow pause button.
+                      // User request: "when they pause it would be paused". Currently clicking just sets active.
+                    }}
+                    className={`relative rounded-2xl overflow-hidden transition-all duration-700 ease-in-out cursor-pointer border border-gray-200
                             ${
                               isActive
-                                ? "flex-[3] bg-[#E0CDF7]/30"
+                                ? "flex-[4] bg-[#E0CDF7]/30"
                                 : "flex-[1] bg-gray-50 hover:bg-gray-100"
                             }
-                            bg-[#F3E8FF] 
+                            bg-[#ECD6FF] 
                         `}
-              >
-                <div className="p-8 h-full flex flex-col relative w-full">
-                  {/* Number */}
-                  <div className="text-8xl font-black text-black mb-auto leading-none">
-                    {step.id}
-                  </div>
-
-                  {/* Content (Active Only) */}
-                  <div
-                    className={`transition-opacity duration-500 delay-200 ${
-                      isActive ? "opacity-100" : "opacity-0 absolute bottom-8"
-                    }`}
                   >
-                    {isActive && (
-                      <div className="flex justify-between items-end">
-                        <div className="max-w-xs">
-                          <h3 className="text-3xl font-bold mb-2 text-black">
-                            {step.title}
-                          </h3>
-                          <p className="text-gray-600 font-medium">
-                            {step.description}
-                          </p>
-                        </div>
-                        {/* Visual Content moved to right side inside container */}
-                        <div className="hidden sm:block absolute top-8 right-8 pointer-events-none">
-                          {step.content}
-                        </div>
+                    <div className="p-8 h-full flex flex-col relative w-full">
+                      {/* Number */}
+                      <div className="text-8xl font-black text-black mb-auto leading-none">
+                        {step.id}
                       </div>
-                    )}
-                  </div>
 
-                  {/* Inactive Title (shown when collapsed to ensure it's not empty?) 
+                      {/* Content (Active Only) */}
+                      <div
+                        className={`transition-opacity duration-500 delay-200 ${
+                          isActive
+                            ? "opacity-100"
+                            : "opacity-0 absolute bottom-8"
+                        }`}
+                      >
+                        {isActive && (
+                          <div className="flex justify-between items-end">
+                            <div className="max-w-xs">
+                              <h3 className="text-3xl font-bold mb-2 text-black">
+                                {step.title}
+                              </h3>
+                              <p className="text-gray-600 font-medium">
+                                {step.description}
+                              </p>
+                            </div>
+                            {/* Visual Content moved to right side inside container */}
+                            <div className="hidden sm:block absolute top-8 right-8 pointer-events-none">
+                              {step.content}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Inactive Title (shown when collapsed to ensure it's not empty?) 
                                 User img shows: "Sign Up & Connect" at bottom when collapsed.
                             */}
-                  {!isActive && (
-                    <div className="mt-auto">
-                      <h3 className="text-2xl font-bold text-black leading-tight">
-                        {step.title}
-                      </h3>
+                      {!isActive && (
+                        <div className="mt-auto">
+                          <h3 className="text-2xl font-bold text-black leading-tight">
+                            {step.title}
+                          </h3>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                  </div>
+                );
+              })}
+            </div>
 
-        {/* Controls */}
-        <div className="flex justify-center items-center gap-4 mt-12">
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            {isPlaying ? (
-              <Pause className="w-5 h-5 text-black" />
-            ) : (
-              <Play className="w-5 h-5 text-black ml-1" />
-            )}
-          </button>
-
-          <div className="bg-gray-100 rounded-full px-2 py-2 flex gap-2">
-            {steps.map((_, idx) => (
-              <div
-                key={idx}
-                className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
-                  idx === activeStep ? "w-12 bg-gray-300" : "w-2 bg-black"
-                }`}
+            {/* Controls */}
+            <div className="flex justify-center items-center gap-4 mt-12">
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
               >
-                {idx === activeStep && (
-                  <div
-                    className="absolute top-0 left-0 h-full bg-black transition-all duration-100 ease-linear"
-                    style={{ width: `${progress}%` }}
-                  ></div>
+                {isPlaying ? (
+                  <Pause className="w-5 h-5 text-black" />
+                ) : (
+                  <Play className="w-5 h-5 text-black ml-1" />
                 )}
+              </button>
+
+              <div className="bg-gray-100 rounded-full px-2 py-2 flex gap-2">
+                {steps.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`relative h-2 rounded-full overflow-hidden transition-all duration-300 ${
+                      idx === activeStep ? "w-12 bg-gray-300" : "w-2 bg-black"
+                    }`}
+                  >
+                    {idx === activeStep && (
+                      <div
+                        className="absolute top-0 left-0 h-full bg-black transition-all duration-100 ease-linear"
+                        style={{ width: `${progress}%` }}
+                      ></div>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      ) : (
+        <GrowthPlan />
+      )}
+    </>
   );
 };
 

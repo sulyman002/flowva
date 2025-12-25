@@ -1,14 +1,21 @@
 import users_icon from "../assets/users.svg";
-import brevo_banner from "../assets/brevo_banner.svg"
-import jotform_banner from "../assets/jotform_banner.svg"
-import monday_banner from "../assets/monday_banner.svg"
-import reclaim_banner from "../assets/reclaim_banner.svg"
-import nietz from "../assets/nietz.svg"
-import light_box_logo from "../assets/light_box_logo.svg"
-import spherule from "../assets/spherule.svg"
-import globank from "../assets/gblobank.svg"
-import father_dev from "../assets/father_dev.svg"
+import brevo_banner from "../assets/brevo_banner.svg";
+import jotform_banner from "../assets/jotform_banner.svg";
+import monday_banner from "../assets/monday_banner.svg";
+import reclaim_banner from "../assets/reclaim_banner.svg";
+import nietz from "../assets/nietz.svg";
+import light_box_logo from "../assets/light_box_logo.svg";
+import spherule from "../assets/spherule.svg";
+import globank from "../assets/gblobank.svg";
+import father_dev from "../assets/father_dev.svg";
 
+// How it works icons
+
+import subscribe from "../assets/subscribe.svg"
+import launch from "../assets/launch.svg"
+import speaker from "../assets/speaker.svg"
+import track from "../assets/track.svg"
+import crown from "../assets/crown.svg"
 
 
 export const tabs = [
@@ -106,7 +113,6 @@ export const cardsData = [
   },
 ];
 
-
 export const logos = [
   {
     id: 1,
@@ -139,3 +145,99 @@ export const logos = [
     alt: "Nietz logo",
   },
 ];
+
+export const howItWorksSteps = [
+  {
+    id: 1,
+    step: "Step 1",
+    title: "Subscribe.",
+    description: "Choose the plan that fits your feature goals.",
+    bg: "#F77A38",
+    image: subscribe,
+    fullWidth: false,
+  },
+  {
+    id: 2,
+    step: "Step 2",
+    title: "Launch Features",
+    description:
+      "Set up actions, schedule them, and reach techies, freelancers, and remote workers where they work.",
+    bg: "#BC71FE",
+    image: launch,
+    fullWidth: false,
+  },
+  {
+    id: 3,
+    step: "Step 3",
+    title: "Engage Users",
+    description: "Offer perks and rewards that drive deeper participation.",
+    bg: "#F76593",
+    image: speaker,
+    fullWidth: false,
+  },
+  {
+    id: 4,
+    step: "Step 4",
+    title: "Track Results",
+    description:
+      "Monitor feature performance in real time with actionable analytics.",
+    bg: "#008753",
+    image: track,
+    fullWidth: false,
+  },
+  {
+    id: 5,
+    step: "Step 5",
+    title: "Optional Premium Support",
+    description:
+      "Let the Flowva team run your features for maximum impact.",
+    bg: "#159481",
+    image: crown,
+    fullWidth: true,
+  },
+];
+
+
+
+ export const testimonials = [
+    {
+      id: 1,
+      text: "Flowvahub makes finding tools effortless. Instead of wasting hours jumping between sites, I just open Discover Tools everything’s clear, organized, and right there. Feels less like searching, more like unlocking possibilities.",
+      name: "Ummaratu M.",
+      role: "Freelancer & Virtual Assistant",
+      color: "bg-[#60CFFF]", // Blue
+      emoji: "☕💜",
+    },
+    {
+      id: 2,
+      text: "Flowvahub is my new sidekick. It keeps my apps in line, my subs in check, and still finds a way to pay me in rewards. If it could make coffee, I’d marry it.",
+      name: "Adewale O.",
+      role: "Freelancer & Digital Creator",
+      color: "bg-[#FBFF64]", // Yellow
+      emoji: "",
+    },
+    {
+      id: 3,
+      text: "Didn’t even realise how much I was drowning in scattered tools until I saw Flowvahub. The idea of getting rewarded just for organizing my stack? That’s the kind of motivation I need.",
+      name: "Lois E.",
+      role: "Social media manager",
+      color: "bg-[#EE7DF9]", // Pink
+      emoji: "",
+    },
+    {
+      id: 4,
+      text: "The community aspect is what sold me. Seeing what tools other creators are using has saved me so much trial and error. It's properly curated.",
+      name: "Sarah J.",
+      role: "Product Designer",
+      color: "bg-[#A7F3D0]", // Green
+      emoji: "🚀",
+    },
+    {
+      id: 5,
+      text: "Finally a platform that gives back. I've discovered amazing tools I use daily now, and the rewards are just the cherry on top.",
+      name: "Michael R.",
+      role: "Indie Hacker",
+      color: "bg-[#FED7AA]", // Orange
+      emoji: "🔥",
+    },
+  ];

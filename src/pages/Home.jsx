@@ -21,7 +21,7 @@ const Home = () => {
       <Features viewMode={viewMode} />
       <Benefits viewMode={viewMode} />
       <HowItWorks viewMode={viewMode} />
-      <GrowthCommunity />
+      <GrowthCommunity viewMode={viewMode}/>
       <FAQ />
       <StayProductive />
     </>
