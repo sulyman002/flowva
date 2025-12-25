@@ -17,11 +17,13 @@ import Subscriptions from "./pages/dashboard/Subscriptions";
 import Rewards from "./pages/dashboard/Rewards";
 import Settings from "./pages/dashboard/Settings";
 import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "sonner";
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
+        <Toaster position="top-right" richColors />
         <Routes>
           {/* Public Landing Pages (Wrapped in Layout & PublicRoute to redirect auth users) */}
           <Route

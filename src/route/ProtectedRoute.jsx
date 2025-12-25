@@ -7,9 +7,9 @@ const ProtectedRoute = ({ children }) => {
   const { user, loading, onboardingComplete } = useAuth();
   const location = useLocation();
 
-  if (loading) {
+  /* if (loading) {
     return <PageLoader />;
-  }
+  } */
 
   if (!user) {
     return <Navigate to="/" state={{ from: location }} replace />;

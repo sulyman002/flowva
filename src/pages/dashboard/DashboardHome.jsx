@@ -10,16 +10,20 @@ const DashboardHome = () => {
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6">
-      {/* Page Header (Desktop mainly, but good for mobile content context too) */}
-      <div className="flex items-center justify-between pb-4 md:pb-0">
+      {/* Page Header (Sticky) */}
+      <div className="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm pt-2 pb-4 flex items-center justify-between">
         <h1 className="text-xl md:text-2xl font-bold text-gray-900">
-          Good afternoon, <span className="text-[#9013FE]">{displayName}</span>
+          Good afternoon,{" "}
+          <span className="text-[#9013FE] capitalize">{displayName}</span>
         </h1>
         {/* Desktop Notification Bell */}
-        <div className="hidden md:block relative cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors">
-          <Bell size={20} className="text-gray-600" />
-          <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
-        </div>
+        <button className="hidden md:block relative cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors">
+          <Bell size={24} className="text-[#2D3748]" />
+          <span className="absolute top-1 right-1 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#9013FE] border-2 border-white"></span>
+          </span>
+        </button>
       </div>
 
       {/* MOBILE ONLY: Big News Card */}

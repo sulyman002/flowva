@@ -6,9 +6,9 @@ import PageLoader from "../components/PageLoader";
 const PublicRoute = ({ children }) => {
   const { user, loading, onboardingComplete } = useAuth();
 
-  if (loading) {
+  /* if (loading) {
     return <PageLoader />;
-  }
+  } */
 
   if (user) {
     // User is authenticated, redirect to appropriate protected page

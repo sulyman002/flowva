@@ -6,48 +6,35 @@ import { useAuth } from "../context/AuthContext";
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user } = useAuth(); // To get user info for header if needed
+  const { user } = useAuth();
+
+  // Get first name safely
+  const firstName = user?.user_metadata?.first_name || "Pulsepoint";
 
   return (
-    <div className="flex h-screen bg-white">
-      {/* Sidebar - Hidden on mobile unless toggled */}
+    <div className="flex flex-col lg:flex-row min-h-[100dvh] lg:h-screen w-full bg-gray-50">
+      {/* Sidebar Component handles its own responsive behavior (fixed on mobile, static on desktop) */}
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Mobile Header (Fixed) */}
-        <header className="h-16 flex items-center justify-between px-4 border-b border-gray-100 bg-white md:hidden shrink-0 z-30">
+      <main className="flex-grow bg-gray-50 px-4 lg:px-8 lg:pt-6 overflow-y-auto relative">
+        {/* Sticky Header - Minimal for Mobile Toggle */}
+        <header className="sticky top-0 z-20 bg-gray-50 py-3 flex justify-between items-center lg:hidden">
+          {/* Hamburger for Mobile */}
           <button
             onClick={() => setIsSidebarOpen(true)}
             className="text-gray-600 hover:text-gray-900 focus:outline-none"
           >
             <Menu size={24} />
           </button>
-
-          <span className="font-heading text-lg font-bold text-gray-900">
-            {/* Dynamic Title could go here based on route, or just Greeting */}
-            {/* For now keeping it cleaner or matching the mockup which shows greeting */}
-          </span>
-
-          <div className="relative">
-            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-              <Bell size={18} className="text-gray-600" />
-              <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
-            </div>
-          </div>
+          {/* No other content in global header as requested */}
         </header>
 
-        {/* Desktop Header (Optional: Mockup shows text "Good afternoon, Pulsepoint" at top content. 
-            If we want that fixed, we can put it here or in the page. 
-            User said "header of each of the outlet which will also be fix on scrolling".
-            So it implies the header part should be outside the scrollable area.
-        */}
-
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto bg-white p-4 md:p-8 scroll-smooth">
+        {/* Content Scroll Area */}
+        <section className="space-y-6 pb-8">
           <Outlet />
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };

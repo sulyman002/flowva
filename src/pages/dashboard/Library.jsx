@@ -3,7 +3,48 @@ import { Plus, Search, Filter } from "lucide-react";
 
 const Library = () => {
   // Mock data for initial view - eventually this will come from Supabase
-  const tools = [];
+  const [tools, setTools] = React.useState([
+    {
+      id: 1,
+      name: "Notion",
+      category: "Productivity",
+      cost: 0,
+      status: "Active",
+      icon: "N",
+    },
+    {
+      id: 2,
+      name: "Figma",
+      category: "Design",
+      cost: 12,
+      status: "Active",
+      icon: "Fi",
+    },
+    {
+      id: 3,
+      name: "Slack",
+      category: "Communication",
+      cost: 8,
+      status: "Active",
+      icon: "S",
+    },
+  ]);
+
+  const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
+
+  const handleAddTool = () => {
+    // Mock adding a tool
+    const newTool = {
+      id: tools.length + 1,
+      name: "New Tool " + (tools.length + 1),
+      category: "Uncategorized",
+      cost: 0,
+      status: "Active",
+      icon: "T",
+    };
+    setTools([...tools, newTool]);
+    setIsAddModalOpen(false);
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6">
@@ -16,7 +57,10 @@ const Library = () => {
           </p>
         </div>
 
-        <button className="bg-[#9013FE] hover:bg-purple-700 text-white font-semibold py-2.5 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg shadow-purple-200">
+        <button
+          onClick={handleAddTool}
+          className="bg-[#9013FE] hover:bg-purple-700 text-white font-semibold py-2.5 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg shadow-purple-200"
+        >
           <Plus size={20} />
           <span>Add Tool</span>
         </button>
@@ -50,13 +94,51 @@ const Library = () => {
           <p className="text-gray-500 max-w-sm mb-6">
             Start building your stack by adding the tools you use for work.
           </p>
-          <button className="text-[#9013FE] font-semibold hover:underline">
+          <button
+            onClick={handleAddTool}
+            className="text-[#9013FE] font-semibold hover:underline"
+          >
             Browse popular tools
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Tool Cards will go here */}
+          {tools.map((tool) => (
+            <div
+              key={tool.id}
+              className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center text-[#9013FE] font-bold text-xl">
+                    {tool.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{tool.name}</h3>
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                      {tool.category}
+                    </span>
+                  </div>
+                </div>
+                <button className="text-gray-400 hover:text-gray-600">
+                  ...
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between text-sm text-gray-600 mt-4 pt-4 border-t border-gray-50">
+                <div>
+                  <span className="block text-gray-400 text-xs">Cost</span>
+                  <span className="font-semibold">${tool.cost}/mo</span>
+                </div>
+                <div>
+                  <span className="block text-gray-400 text-xs">Status</span>
+                  <span className="bg-green-50 text-green-600 px-2 py-0.5 rounded-full text-xs font-medium">
+                    {tool.status}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

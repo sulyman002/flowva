@@ -7,6 +7,7 @@ import {
   checkOnboardingStatus as supabaseCheckOnboarding,
 } from "../supabase/auth";
 import PageLoader from "../components/PageLoader";
+import { getItem, setItem, removeItem } from "../utils/localStorage";
 
 const AuthContext = createContext();
 
@@ -22,8 +23,23 @@ export const AuthProvider = ({ children }) => {
 
   // Helper to update local state logic based on user ID
   const updateOnboardingState = async (userId) => {
+    // 1. Check Local Storage First
+    const localData = getItem("flowva_onboarding");
+    if (localData && localData.completed && localData.userId === userId) {
+      console.log("Onboarding status found in local storage");
+      setOnboardingComplete(true);
+      return true;
+    }
+
+    // 2. Fallback to Server Check
     const status = await supabaseCheckOnboarding(userId);
     setOnboardingComplete(status);
+
+    // Sync to local if true
+    if (status) {
+      setItem("flowva_onboarding", { completed: true, userId });
+    }
+
     return status;
   };
 
@@ -78,6 +94,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = async () => {
+    removeItem("flowva_onboarding");
     return supabaseSignOut();
   };
 
@@ -93,7 +110,10 @@ export const AuthProvider = ({ children }) => {
     signUp,
     signIn,
     signOut,
+    signIn,
+    signOut,
     checkOnboardingStatus,
+    setOnboardingComplete, // Exposed for manual updates (e.g. optimistic UI or RLS bypass)
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

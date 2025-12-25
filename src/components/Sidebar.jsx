@@ -56,9 +56,9 @@ const Sidebar = ({ isOpen, onClose }) => {
   };
 
   const sidebarClasses = `
-    fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 transform transition-transform duration-300 ease-in-out
+    fixed inset-y-0 left-0 z-50 w-72 h-screen bg-white shadow-md border-r border-black/10 flex flex-col transform transition-transform duration-300 ease-in-out
     ${isOpen ? "translate-x-0" : "-translate-x-full"}
-    md:translate-x-0 md:static md:inset-auto md:flex md:flex-col
+    lg:translate-x-0 lg:static lg:inset-auto
   `;
 
   return (
@@ -66,108 +66,88 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
-      <div className={sidebarClasses}>
-        {/* Logo Area */}
-        <div className="h-16 flex items-center px-6 border-b border-gray-50 md:border-none">
-          {/* Mobile Close Button */}
-          <button onClick={onClose} className="md:hidden mr-4 text-gray-500">
-            <X size={24} />
-          </button>
-
-          <div className="flex items-center gap-2 text-[#9013FE]">
-            <span className="sr-only">Flowva</span>
-            {/* Simple Logo Icon */}
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-8 h-8"
-            >
-              <path
-                d="M12 2L2 7L12 12L22 7L12 2Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 17L12 22L22 17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 12L12 17L22 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="font-heading text-xl font-bold tracking-tight">
-              Flowva
-            </span>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-          {menuItems.map((item) => {
-            // Check for exact match for home, startsWith for others to handle sub-routes if any
-            const isActive =
-              item.path === "/dashboard"
-                ? location.pathname === "/dashboard"
-                : location.pathname.startsWith(item.path);
-
-            return (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => onClose && window.innerWidth < 768 && onClose()}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-[#F4EBFF] text-[#9013FE]"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                }`}
-              >
-                {item.icon}
-                {item.name}
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* User Profile / Footer */}
-        <div className="p-4 border-t border-gray-100">
-          <div className="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-gray-50 cursor-pointer">
-            <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-[#9013FE] font-bold">
-              {user?.email?.[0].toUpperCase() || "U"}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-gray-900 truncate">
-                Pulsepoint
-              </p>
-              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-red-500"
-              title="Sign Out"
-            >
-              <LogOut size={18} />
+      <aside className={sidebarClasses}>
+        <div className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="px-7 py-2 my-2 flex justify-between items-center">
+            <img
+              src="/assets/flowva_logo-xVpZI3-U.png"
+              alt="Flowva Logo"
+              className="h-[40px] object-contain" // Adjusted height slightly
+            />
+            {/* Mobile Close Button inside Sidebar */}
+            <button onClick={onClose} className="lg:hidden text-gray-500">
+              <X size={24} />
             </button>
           </div>
+
+          {/* Navigation */}
+          <nav className="flex-grow px-4 mt-4">
+            <ul className="space-y-1">
+              {menuItems.map((item) => {
+                const isActive =
+                  item.path === "/dashboard"
+                    ? location.pathname === "/dashboard"
+                    : location.pathname.startsWith(item.path);
+
+                return (
+                  <li key={item.name}>
+                    <Link
+                      to={item.path}
+                      onClick={() =>
+                        onClose && window.innerWidth < 1024 && onClose()
+                      }
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer ${
+                        isActive
+                          ? "bg-[rgba(144,_19,_254,_0.2)] text-[#9013FE]"
+                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      }`}
+                    >
+                      {/* Clone element to enforce color if needed, or let text color handle it */}
+                      {React.cloneElement(item.icon, {
+                        className: isActive
+                          ? "text-[#9013FE]"
+                          : "text-gray-500", // Specific icon color
+                      })}
+                      <span className={isActive ? "font-bold" : "font-medium"}>
+                        {item.name}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          {/* User Info */}
+          <div className="relative px-4 py-3 border-t border-[#64748B]">
+            <div className="flex items-center gap-3 w-full text-left">
+              <div className="w-10 h-10 rounded-full bg-[#E9D4FF] text-[#9013FE] flex items-center justify-center font-semibold">
+                {user?.email?.[0]?.toUpperCase() || "P"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-sm capitalize">
+                  {user?.user_metadata?.first_name || "Pulsepoint"}
+                </p>
+                <p className="text-xs text-[#718096] truncate">{user?.email}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="text-gray-400 hover:text-red-500 p-2"
+                title="Sign Out"
+              >
+                <LogOut size={18} />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </aside>
     </>
   );
 };
