@@ -66,7 +66,17 @@ const Library = () => {
         </button>
       </div>
 
-      {/* Filters & Search */}
+      {/* Coming Soon Message */}
+      <div className="mt-20 flex flex-col items-center justify-center text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
+        <p className="text-gray-500 max-w-md">
+          We're working hard to bring you these features. Stay tuned for
+          exciting updates!
+        </p>
+      </div>
+
+      {/* 
+      {/* Filters & Search * /}
       <div className="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -82,7 +92,7 @@ const Library = () => {
         </button>
       </div>
 
-      {/* Content Area */}
+      {/* Content Area * /}
       {tools.length === 0 ? (
         <div className="bg-white border-2 border-dashed border-gray-200 rounded-2xl p-12 flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mb-4">
@@ -141,6 +151,7 @@ const Library = () => {
           ))}
         </div>
       )}
+      */}
     </div>
   );
 };

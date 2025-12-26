@@ -4,21 +4,21 @@ import { useAuth } from "../context/AuthContext";
 import { supabase } from "../supabase/client";
 import { setItem } from "../utils/localStorage";
 import {
-  Check,
   Search,
-  ChevronRight,
   LayoutDashboard,
   Target,
   Zap,
   Gift,
   Smartphone,
-  PenTool,
-  Monitor,
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
-
-const steps = ["welcome", "goal", "focus", "tools", "demo", "name"];
+import {
+  toolsList,
+  onboardingSteps,
+  onboardingGoals,
+  focusCategories,
+} from "../data/data";
 
 const Onboarding = () => {
   const { user, checkOnboardingStatus, setOnboardingComplete } = useAuth();
@@ -34,21 +34,8 @@ const Onboarding = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const toolsList = [
-    { name: "Instapage", icon: "IP" },
-    { name: "Moosend", icon: "Mo" },
-    { name: "Hootsuite", icon: "Ho" },
-    { name: "SendGrid", icon: "SG" },
-    { name: "Warmy", icon: "Wa" },
-    { name: "Later", icon: "La" },
-    { name: "Monday.com", icon: "Mo" },
-    { name: "Notion", icon: "No" },
-    { name: "Guidde", icon: "Gu" },
-    { name: "Evernote", icon: "Ev" },
-  ];
-
   const handleNext = () => {
-    if (currentStep < steps.length - 1) {
+    if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       completeOnboarding();
@@ -68,24 +55,12 @@ const Onboarding = () => {
         return;
       }
 
-      console.log("PAYLOAD being sent:", {
-        id: user.id,
-        onboarding_complete: true,
-        email: user.email,
-        full_name: formData.firstName,
-      });
-
-      // Update profile in Supabase with timeout
       const upsertPromise = supabase.from("profiles").upsert(
         {
           id: user.id,
           onboarding_complete: true,
-          email: user.email, // Added as it is in the schema
-          // goal: formData.goal,
-          // focus: formData.focus,
-          // tools: formData.tools,
-          full_name: formData.firstName, // Mapped to full_name as requested
-          // updated_at: new Date(), // REMOVED: Not in user schema
+          email: user.email,
+          full_name: formData.firstName,
         },
         { onConflict: "id" }
       );
@@ -100,7 +75,6 @@ const Onboarding = () => {
       ]);
 
       if (upsertError) {
-        console.error("Supabase Error Details:", upsertError);
         throw new Error(
           `DB Error: ${upsertError.message} (Code: ${
             upsertError.code || "N/A"
@@ -108,23 +82,14 @@ const Onboarding = () => {
         );
       }
 
-      console.log("Profile updated successfully on server.");
-      // toast.info("Verifying profile..."); // Debugging
-
-      // Revert to simple check
       const isComplete = await checkOnboardingStatus(user.id);
-      console.log("Onboarding status:", isComplete);
-
-      // Force update context if needed? Already done by checkOnboardingStatus in context.
 
       if (!isComplete) {
         console.warn(
           "Onboarding status check returned false despite upsert success."
         );
-        // toast.warning("Profile saved but verification failed. Redirecting anyway...");
       }
 
-      // Success! Save locally as well
       setItem("hasProfile", true);
       setItem("profileId", user.id);
       setItem("flowva_profile_data", {
@@ -132,32 +97,19 @@ const Onboarding = () => {
         ...formData,
       });
 
-      // Keep the old one for now if you want to store form data, or remove it if not needed.
-      // User requested "persist the hasProfile too to know the info"
-      // Let's store the full object in a separate key if we want to restore form state, but strict auth relies on hasProfile
-
-      // Ensure context is updated
       setOnboardingComplete(true);
 
-      // Delay slightly to show the welcome screen/spinner
       setTimeout(() => {
-        console.log("Navigating to dashboard...");
-        // toast.success("Redirecting to Dashboard!");
         navigate("/dashboard", { replace: true });
       }, 2000);
     } catch (err) {
       console.error("Onboarding Exception:", err);
 
-      // FALLBACK: If DB fails (RLS, Timeout, Schema), proceed with Local Storage
-      // The user likely wants to see the dashboard even if backend fails.
-
       const errorMessage = err.message || "Unknown error";
 
-      // Notify user of the specific error but continue
       toast.error(`Backend Verification Failed: ${errorMessage}`);
       toast.info("Proceeding with Offline Mode (Local Storage only)");
 
-      // Force Offline Save
       setItem("hasProfile", true);
       setItem("profileId", user.id || "offline-user");
       setItem("flowva_profile_data", {
@@ -172,13 +124,6 @@ const Onboarding = () => {
       }, 2500);
     }
   };
-
-  // Helper to save strictly successful regular flow too
-  // We should also save it if the database write Succeeded!
-  // ...
-
-  // Actually, I need to update the SUCCESS block as well in the previous steps, which I can't reach easily with this replace chunk.
-  // I'll make a separate call for the success block.
 
   const toggleTool = (toolName) => {
     setFormData((prev) => {
@@ -215,28 +160,7 @@ const Onboarding = () => {
       </p>
 
       <div className="space-y-4">
-        {[
-          {
-            id: "track",
-            title: "Track my tool subscriptions",
-            desc: "See all my subscriptions in one place and reduce costs",
-          },
-          {
-            id: "organize",
-            title: "Organize my work tools",
-            desc: "Manage all my work apps from a single dashboard",
-          },
-          {
-            id: "discover",
-            title: "Discover new tools",
-            desc: "Get recommendations based on my needs",
-          },
-          {
-            id: "rewards",
-            title: "Earn Rewards",
-            desc: "Earn rewards for trying new tools and staying productive",
-          },
-        ].map((item) => (
+        {onboardingGoals.map((item) => (
           <button
             key={item.id}
             onClick={() => {
@@ -265,77 +189,65 @@ const Onboarding = () => {
     </div>
   );
 
-  const renderFocus = () => (
-    <div className="w-full max-w-xl mx-auto text-center">
-      <h2 className="text-2xl font-bold mb-2">What's your primary focus?</h2>
-      <p className="text-gray-500 mb-8">
-        Select the one category you're most interested in
-      </p>
+  const renderFocus = () => {
+    const iconMap = {
+      target: <Target className="w-5 h-5" />,
+      smartphone: <Smartphone className="w-5 h-5" />,
+      layoutDashboard: <LayoutDashboard className="w-5 h-5" />,
+      zap: <Zap className="w-5 h-5" />,
+    };
 
-      <div className="space-y-3">
-        {[
-          {
-            id: "marketing",
-            name: "Sales & Marketing",
-            icon: <Target className="w-5 h-5" />,
-          },
-          {
-            id: "social",
-            name: "Social Media Management",
-            icon: <Smartphone className="w-5 h-5" />,
-          },
-          {
-            id: "project",
-            name: "Project Management",
-            icon: <LayoutDashboard className="w-5 h-5" />,
-          },
-          {
-            id: "productivity",
-            name: "Productivity",
-            icon: <Zap className="w-5 h-5" />,
-          },
-        ].map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setFormData({ ...formData, focus: cat.id })}
-            className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all ${
-              formData.focus === cat.id
-                ? "border-[#9013FE] bg-purple-50 text-[#9013FE]"
-                : "border-gray-100 hover:border-gray-300"
-            }`}
-          >
-            <div
-              className={`p-2 rounded-lg ${
+    return (
+      <div className="w-full max-w-xl mx-auto text-center">
+        <h2 className="text-2xl font-bold mb-2">What's your primary focus?</h2>
+        <p className="text-gray-500 mb-8">
+          Select the one category you're most interested in
+        </p>
+
+        <div className="space-y-3">
+          {focusCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setFormData({ ...formData, focus: cat.id })}
+              className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all ${
                 formData.focus === cat.id
-                  ? "bg-[#9013FE] text-white"
-                  : "bg-purple-100 text-purple-500"
+                  ? "border-[#9013FE] bg-purple-50 text-[#9013FE]"
+                  : "border-gray-100 hover:border-gray-300"
               }`}
             >
-              {cat.icon}
-            </div>
-            <span className="font-semibold">{cat.name}</span>
-          </button>
-        ))}
-      </div>
+              <div
+                className={`p-2 rounded-lg ${
+                  formData.focus === cat.id
+                    ? "bg-[#9013FE] text-white"
+                    : "bg-purple-100 text-purple-500"
+                }`}
+              >
+                {iconMap[cat.iconKey]}
+              </div>
+              <span className="font-semibold">{cat.name}</span>
+            </button>
+          ))}
+        </div>
 
-      <div className="flex justify-between items-center mt-8">
-        <button onClick={handleBack} className="text-gray-600 font-medium">
-          Back
-        </button>
-        <button
-          onClick={handleNext}
-          disabled={!formData.focus}
-          className={`px-8 py-3 rounded-full font-semibold transition-colors ${
-            formData.focus
-              ? "bg-[#9013FE] text-white hover:bg-purple-700"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Continue
-        </button>
+        <div className="flex justify-between items-center mt-8">
+          <button onClick={handleBack} className="text-gray-600 font-medium">
+            Back
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={!formData.focus}
+            className={`px-8 py-3 rounded-full font-semibold transition-colors ${
+              formData.focus
+                ? "bg-[#9013FE] text-white hover:bg-purple-700"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Continue
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderTools = () => {
     const filteredTools = toolsList.filter((t) =>
@@ -515,7 +427,6 @@ const Onboarding = () => {
     </div>
   );
 
-  // Success/Welcome Screen
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
@@ -534,20 +445,11 @@ const Onboarding = () => {
     );
   }
 
-  // Calculate progress for pagination
-  // We want pagination only for steps 1 to N (excluding Welcome step 0?)
-  // Actually, usually pagination is shown for actual input steps.
-  // steps = ["welcome", "goal", "focus", "tools", "demo", "name"]
-  // Indices: 0, 1, 2, 3, 4, 5
-  // Let's show pagination if currentStep > 0
-
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
-      {/* Pagination - Custom "Tube" style */}
       {currentStep > 0 && (
         <div className="flex items-center gap-2 mb-12">
-          {steps.slice(1).map((_, index) => {
-            // Adjust index since we sliced off the first step
+          {onboardingSteps.slice(1).map((_, index) => {
             const actualStepIndex = index + 1;
             const isActive = currentStep === actualStepIndex;
             const isCompleted = currentStep > actualStepIndex;
@@ -556,9 +458,7 @@ const Onboarding = () => {
               <div
                 key={index}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  isActive
-                    ? "w-8 bg-[#9013FE]" // Active tube
-                    : "w-2 bg-gray-200" // Inactive dot
+                  isActive ? "w-8 bg-[#9013FE]" : "w-2 bg-gray-200"
                 } ${isCompleted ? "bg-gray-300" : ""}`}
               />
             );

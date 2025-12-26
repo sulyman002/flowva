@@ -1,28 +1,18 @@
 import React from "react";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  MessageCircle,
-} from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import flowvaIcon from "../assets/flowva_icon(white).svg";
+import { footerLinks } from "../data/data";
 
 const Footer = () => {
   return (
     <footer className="bg-black text-white pb-8 relative overflow-hidden rounded-t-[40px] ">
-     
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section */}
         <div className="flex justify-center mb-24">
           <div className="bg-[#111111]  rounded-b-[28px] p-10 md:p-14 w-full max-w-3xl text-center relative overflow-hidden">
-            {/* Top Logo */}
             <div className="flex justify-center mb-8">
               <img src={flowvaIcon} alt="Flowva" className="h-16 w-auto" />
             </div>
 
-            {/* Input Group */}
             <div className="max-w-md mx-auto relative mb-6">
               <input
                 type="email"
@@ -40,9 +30,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Links Grid */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 border-b border-gray-900 pb-16 mb-16">
-          {/* Brand Column */}
           <div className="lg:w-1/4">
             <div className="flex items-center gap-2 mb-6">
               <img src={flowvaIcon} alt="Flowva" className="h-8 w-auto" />
@@ -54,106 +42,27 @@ const Footer = () => {
             <p className="text-gray-600 text-xs">&copy; 2025 Flowva</p>
           </div>
 
-          {/* Navigation Columns */}
           <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-4">
-            {/* Hub */}
-            <div>
-              <h4 className="font-bold text-white mb-6">Hub</h4>
-              <ul className="space-y-4 text-sm text-gray-500">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Discover
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Library
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Rewards
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="font-bold text-white mb-6">Company</h4>
-              <ul className="space-y-4 text-sm text-gray-500">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Blog
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Support */}
-            <div>
-              <h4 className="font-bold text-white mb-6">Support</h4>
-              <ul className="space-y-4 text-sm text-gray-500">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    FAQ
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Community */}
-            <div>
-              <h4 className="font-bold text-white mb-6">Community</h4>
-              <ul className="space-y-4 text-sm text-gray-500">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Affiliate
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Influencer
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Referral
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h4 className="font-bold text-white mb-6">Legal</h4>
-              <ul className="space-y-4 text-sm text-gray-500">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Terms and Conditions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {footerLinks.map((section) => (
+              <div key={section.title}>
+                <h4 className="font-bold text-white mb-6">{section.title}</h4>
+                <ul className="space-y-4 text-sm text-gray-500">
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Social Icons */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm text-gray-400">
           <a
             href="#"
@@ -165,7 +74,6 @@ const Footer = () => {
             href="#"
             className="flex items-center gap-2 hover:text-white transition-colors"
           >
-            {/* X Icon (Custom SVG or text approx) */}
             <div className="w-5 h-5 flex items-center justify-center font-bold text-lg">
               𝕏
             </div>
@@ -187,7 +95,6 @@ const Footer = () => {
             href="#"
             className="flex items-center gap-2 hover:text-white transition-colors"
           >
-            {/* Tiktok Icon (Custom or generic music) */}
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
               <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
             </svg>

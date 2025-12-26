@@ -1,25 +1,10 @@
 import React, { useState } from "react";
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Rocket,
-  Compass,
-  FileText,
-  Coins,
-  Info,
-  MessageSquare,
-  HelpCircle,
-  Mail,
-  Handshake,
-  Camera,
-  Share2,
-} from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { navLinks } from "../data/data";
-import flowva_logo from "../assets/flowva_logo(blue).png"
+import { navLinks, announcementData } from "../data/data";
+import flowva_logo from "../assets/flowva_logo(blue).png";
 
 const Header = () => {
   const { user, signOut, onboardingComplete } = useAuth();
@@ -32,36 +17,29 @@ const Header = () => {
     navigate("/login");
   };
 
-  
-
   return (
     <header className=" " onMouseLeave={() => setActiveDropdown(null)}>
-      {/* Announcement Bar */}
       <div className="relative bg-black text-white font-500 text-center text-xs py-4 font-medium mb-4">
-        <span className="opacity-90">
-          🚀Big news! The full Flowva experience + mobile apps are lunching soon
-          on iOS S Android{" "}
-        </span>
-        <a href="#" className="underline hover:text-white/80 ml-1">
-          Read more inside &rarr;
+        <span className="opacity-90">{announcementData.text} </span>
+        <a
+          href={announcementData.linkHref}
+          className="underline hover:text-white/80 ml-1"
+        >
+          {announcementData.linkText}
         </a>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 bg-white/90 lg:px-3 border border-gray-200 rounded-full px-2 py-2 shadow-sm">
         <div className="flex justify-between items-center">
-          {/* Logo & Navigation Container */}
           <div className="hidden md:flex items-center  z-50 relative">
-            {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer px-4">
               <div className="w-8 h-8 flex items-center justify-center text-primary font-bold text-xl">
                 <img src={flowva_logo} alt="" />
               </div>
             </div>
 
-            {/* Vertical divider */}
             <div className="h-6 w-px bg-gray-200 mx-2"></div>
 
-            {/* Nav Links */}
             <nav className="flex space-x-1">
               {navLinks.map((link) => (
                 <div
@@ -82,7 +60,6 @@ const Header = () => {
             </nav>
           </div>
 
-          {/* Mobile Logo */}
           <div className="md:hidden flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">
               F
@@ -131,7 +108,6 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -146,7 +122,6 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mega Menu Dropdown */}
         {activeDropdown && (
           <div
             className="absolute top-full left-0 right-0 w-full pt-2 z-40 px-2"
@@ -164,7 +139,6 @@ const Header = () => {
                           className="w-56 h-72 bg-gradient-to-b from-purple-50 via-white to-white rounded-2xl flex flex-col items-center justify-center border border-purple-50 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                          {/* Icon Container with pseudo-3D look */}
                           <div
                             className={`relative z-10 w-24 h-24 ${item.color} rounded-full flex items-center justify-center shadow-lg mb-8 group-hover:scale-110 transition-transform duration-300 ring-4 ring-white`}
                           >
@@ -183,7 +157,6 @@ const Header = () => {
         )}
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl z-50">
           <div className="px-4 pt-2 pb-6 space-y-2">

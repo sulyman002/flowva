@@ -48,8 +48,18 @@ const Settings = () => {
         <p className="text-gray-500">Manage your account preferences</p>
       </div>
 
+      {/* Coming Soon Message */}
+      <div className="mt-20 flex flex-col items-center justify-center text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
+        <p className="text-gray-500 max-w-md">
+          We're working hard to bring you these features. Stay tuned for
+          exciting updates!
+        </p>
+      </div>
+
+      {/* 
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar Nav */}
+        {/* Sidebar Nav * /}
         <div className="w-full md:w-64 flex-shrink-0 space-y-2">
           {[
             { id: "profile", label: "Profile", icon: User },
@@ -81,11 +91,11 @@ const Settings = () => {
           </button>
         </div>
 
-        {/* content Area */}
+        {/* content Area * /}
         <div className="flex-1">
           {activeTab === "profile" && (
             <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm space-y-8">
-              {/* Avatar Header */}
+              {/* Avatar Header * /}
               <div className="flex items-center gap-6">
                 <div className="relative">
                   <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 overflow-hidden">
@@ -103,7 +113,7 @@ const Settings = () => {
                 </div>
               </div>
 
-              {/* Form Fields */}
+              {/* Form Fields * /}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">
@@ -227,6 +237,7 @@ const Settings = () => {
           )}
         </div>
       </div>
+      */}
     </div>
   );
 };

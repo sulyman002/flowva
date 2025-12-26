@@ -59,7 +59,17 @@ const TechStack = () => {
         </button>
       </div>
 
-      {/* Tabs & Search */}
+      {/* Coming Soon Message */}
+      <div className="mt-20 flex flex-col items-center justify-center text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
+        <p className="text-gray-500 max-w-md">
+          We're working hard to bring you these features. Stay tuned for
+          exciting updates!
+        </p>
+      </div>
+
+      {/* 
+      {/* Tabs & Search * /}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex bg-gray-100 p-1 rounded-xl w-full md:w-auto">
           <button
@@ -96,7 +106,7 @@ const TechStack = () => {
         </div>
       </div>
 
-      {/* Content Grid */}
+      {/* Content Grid * /}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {myStacks.map((stack) => (
           <div
@@ -156,7 +166,7 @@ const TechStack = () => {
           </div>
         ))}
 
-        {/* Create New Placeholder Card */}
+        {/* Create New Placeholder Card * /}
         <button
           onClick={handleCreateStack}
           className="border-2 border-dashed border-gray-200 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 text-gray-400 hover:border-[#9013FE] hover:text-[#9013FE] hover:bg-purple-50/50 transition-all duration-300 min-h-[300px]"
@@ -167,6 +177,7 @@ const TechStack = () => {
           <span className="font-semibold">Create New Stack</span>
         </button>
       </div>
+      */}
     </div>
   );
 };

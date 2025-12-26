@@ -111,7 +111,17 @@ const Discover = () => {
         </p>
       </div>
 
-      {/* Search & Filter */}
+      {/* Coming Soon Message */}
+      <div className="mt-20 flex flex-col items-center justify-center text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
+        <p className="text-gray-500 max-w-md">
+          We're working hard to bring you these features. Stay tuned for
+          exciting updates!
+        </p>
+      </div>
+
+      {/* 
+      {/* Search & Filter * /}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -124,7 +134,7 @@ const Discover = () => {
           />
         </div>
 
-        {/* Categories (Desktop) */}
+        {/* Categories (Desktop) * /}
         <div className="hidden md:flex items-center gap-2 bg-white p-1 rounded-xl border border-gray-100 shadow-sm">
           {CATEGORIES.map((cat) => (
             <button
@@ -141,7 +151,7 @@ const Discover = () => {
           ))}
         </div>
 
-        {/* Categories (Mobile Scroll) */}
+        {/* Categories (Mobile Scroll) * /}
         <div className="md:hidden w-full overflow-x-auto pb-2 flex gap-2">
           {CATEGORIES.map((cat) => (
             <button
@@ -159,7 +169,7 @@ const Discover = () => {
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Grid * /}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredTools.length > 0 ? (
           filteredTools.map((tool) => (
@@ -211,6 +221,7 @@ const Discover = () => {
           </div>
         )}
       </div>
+      */}
     </div>
   );
 };

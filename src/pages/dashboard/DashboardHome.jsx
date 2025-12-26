@@ -26,14 +26,24 @@ const DashboardHome = () => {
         </button>
       </div>
 
-      {/* MOBILE ONLY: Big News Card */}
+      {/* Coming Soon Message */}
+      <div className="mt-20 flex flex-col items-center justify-center text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
+        <p className="text-gray-500 max-w-md">
+          We're working hard to bring you these features. Stay tuned for
+          exciting updates!
+        </p>
+      </div>
+
+      {/* 
+      {/* MOBILE ONLY: Big News Card * /}
       <div className="md:hidden bg-[#9013FE] rounded-2xl p-6 text-white shadow-lg text-center space-y-4">
         <div className="bg-white/20 w-fit mx-auto px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
           Exciting Update 🚀
         </div>
 
         <div className="w-24 h-24 mx-auto bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-          {/* Placeholder for the image within the card in screenshot */}
+          {/* Placeholder for the image within the card in screenshot * /}
           <Gift size={40} className="text-white" />
         </div>
 
@@ -53,9 +63,9 @@ const DashboardHome = () => {
         </button>
       </div>
 
-      {/* MOBILE ONLY: Stats Grid (My Tools, Tech Stack) */}
+      {/* MOBILE ONLY: Stats Grid (My Tools, Tech Stack) * /}
       <div className="md:hidden grid grid-cols-1 gap-4">
-        {/* My Tools */}
+        {/* My Tools * /}
         <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-[#9013FE]">
@@ -72,7 +82,7 @@ const DashboardHome = () => {
           </button>
         </div>
 
-        {/* My Tech Stack */}
+        {/* My Tech Stack * /}
         <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <div className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500">
@@ -90,9 +100,9 @@ const DashboardHome = () => {
         </div>
       </div>
 
-      {/* DESKTOP CONTENT: Subscriptions & Rewards Cards (As per Desktop Mockup) */}
+      {/* DESKTOP CONTENT: Subscriptions & Rewards Cards (As per Desktop Mockup) * /}
       <div className="hidden md:flex flex-col gap-6">
-        {/* No Subscriptions Card */}
+        {/* No Subscriptions Card * /}
         <div className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-sm min-h-[250px]">
           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
             <CreditCard size={32} className="text-[#9013FE]" />
@@ -109,7 +119,7 @@ const DashboardHome = () => {
           </button>
         </div>
 
-        {/* Earn Rewards Card */}
+        {/* Earn Rewards Card * /}
         <div className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-sm min-h-[250px]">
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6">
             <Gift size={32} className="text-red-500" />
@@ -126,6 +136,7 @@ const DashboardHome = () => {
           </button>
         </div>
       </div>
+      */}
     </div>
   );
 };

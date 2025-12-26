@@ -9,8 +9,6 @@ import spherule from "../assets/spherule.svg";
 import globank from "../assets/gblobank.svg";
 import father_dev from "../assets/father_dev.svg";
 
-// How it works icons
-
 import subscribe from "../assets/subscribe.svg";
 import launch from "../assets/launch.svg";
 import speaker from "../assets/speaker.svg";
@@ -36,8 +34,8 @@ export const productivityData = [
         "https://i.pravatar.cc/100?img=4",
       ],
       text: "10,000+",
-      itemType: "image", // image, icon, text
-      className: "rounded-full ring-2 ring-white", // specific styling for items
+      itemType: "image",
+      className: "rounded-full ring-2 ring-white",
     },
   },
   {
@@ -49,13 +47,13 @@ export const productivityData = [
       items: ["⚛️", "🔷", "🦊", "✅"],
       text: "and many more",
       itemType: "icon",
-      className: "rounded", // styling for icon container
+      className: "rounded",
       bgColors: [
         "bg-purple-100",
         "bg-blue-100",
         "bg-orange-100",
         "bg-green-100",
-      ], // specific for tools
+      ],
     },
   },
   {
@@ -72,7 +70,6 @@ export const productivityData = [
   },
 ];
 
-// cardsData.js
 export const cardsData = [
   {
     name: "Brevo",
@@ -201,7 +198,7 @@ export const testimonials = [
     text: "Flowvahub makes finding tools effortless. Instead of wasting hours jumping between sites, I just open Discover Tools everything’s clear, organized, and right there. Feels less like searching, more like unlocking possibilities.",
     name: "Ummaratu M.",
     role: "Freelancer & Virtual Assistant",
-    color: "bg-[#60CFFF]", // Blue
+    color: "bg-[#60CFFF]",
     emoji: "☕💜",
   },
   {
@@ -209,7 +206,7 @@ export const testimonials = [
     text: "Flowvahub is my new sidekick. It keeps my apps in line, my subs in check, and still finds a way to pay me in rewards. If it could make coffee, I’d marry it.",
     name: "Adewale O.",
     role: "Freelancer & Digital Creator",
-    color: "bg-[#FBFF64]", // Yellow
+    color: "bg-[#FBFF64]",
     emoji: "",
   },
   {
@@ -217,7 +214,7 @@ export const testimonials = [
     text: "Didn’t even realise how much I was drowning in scattered tools until I saw Flowvahub. The idea of getting rewarded just for organizing my stack? That’s the kind of motivation I need.",
     name: "Lois E.",
     role: "Social media manager",
-    color: "bg-[#EE7DF9]", // Pink
+    color: "bg-[#EE7DF9]",
     emoji: "",
   },
   {
@@ -225,7 +222,7 @@ export const testimonials = [
     text: "The community aspect is what sold me. Seeing what tools other creators are using has saved me so much trial and error. It's properly curated.",
     name: "Sarah J.",
     role: "Product Designer",
-    color: "bg-[#A7F3D0]", // Green
+    color: "bg-[#A7F3D0]",
     emoji: "🚀",
   },
   {
@@ -233,7 +230,7 @@ export const testimonials = [
     text: "Finally a platform that gives back. I've discovered amazing tools I use daily now, and the rewards are just the cherry on top.",
     name: "Michael R.",
     role: "Indie Hacker",
-    color: "bg-[#FED7AA]", // Orange
+    color: "bg-[#FED7AA]",
     emoji: "🔥",
   },
 ];
@@ -386,4 +383,157 @@ export const navLinks = [
       },
     ],
   },
+];
+
+export const toolsList = [
+  { name: "Instapage", icon: "IP" },
+  { name: "Moosend", icon: "Mo" },
+  { name: "Hootsuite", icon: "Ho" },
+  { name: "SendGrid", icon: "SG" },
+  { name: "Warmy", icon: "Wa" },
+  { name: "Later", icon: "La" },
+  { name: "Monday.com", icon: "Mo" },
+  { name: "Notion", icon: "No" },
+  { name: "Guidde", icon: "Gu" },
+  { name: "Evernote", icon: "Ev" },
+];
+
+export const onboardingSteps = [
+  "welcome",
+  "goal",
+  "focus",
+  "tools",
+  "demo",
+  "name",
+];
+
+export const onboardingGoals = [
+  {
+    id: "track",
+    title: "Track my tool subscriptions",
+    desc: "See all my subscriptions in one place and reduce costs",
+  },
+  {
+    id: "organize",
+    title: "Organize my work tools",
+    desc: "Manage all my work apps from a single dashboard",
+  },
+  {
+    id: "discover",
+    title: "Discover new tools",
+    desc: "Get recommendations based on my needs",
+  },
+  {
+    id: "rewards",
+    title: "Earn Rewards",
+    desc: "Earn rewards for trying new tools and staying productive",
+  },
+];
+
+export const days = ["M", "T", "W", "T", "F", "S", "S"];
+
+export const faqs = [
+  {
+    question: "What is Flowvahub?",
+    answer:
+      "Flowvahub is your productivity sidekick — helping you discover new tools, manage subscriptions, and earn rewards for staying productive.",
+  },
+  {
+    question: "Is my data secure with Flowva?",
+    answer:
+      "Absolutely. Your data is private and never sold. You decide what to share, and it’s only used to improve your experience.",
+  },
+  {
+    question: "How does team collaboration work?",
+    answer:
+      "Teams can share recommendations, optimize workflows together, view analytics, and manage shared subscriptions from a single dashboard. (Note: Rewards are not included for Teams.)",
+  },
+  {
+    question: "How do Smart Tool Recommendations work?",
+    answer:
+      "The more you use our platform, the better it understands your workflow — giving you smarter, more relevant tool suggestions over time.",
+  },
+  {
+    question: "Can I cancel my subscription anytime?",
+    answer:
+      "Yes. You can cancel your Pro or Team plan anytime. You'll keep access until the end of your billing cycle, and you can always downgrade to our Free plan.",
+  },
+  {
+    question: "Can I manage all my subscriptions in one place?",
+    answer:
+      "Yes! Flowva tracks all your subscriptions in one place — sending renewal alerts, monitoring spending, and helping you save money.",
+  },
+  {
+    question: "Do you offer mobile apps?",
+    answer:
+      "Yes 😃 Our iOS and Android apps are launching soon, so you can manage subscriptions, get recommendations, earn rewards, and stay connected anywhere.",
+  },
+  {
+    question: "What if I need help getting started?",
+    answer:
+      "We provide onboarding guides, tutorials, and email support. Pro users get priority support, while Teams and Organizations receive dedicated onboarding and training.",
+  },
+  {
+    question: "Can I connect with other tech professionals on Flowva?",
+    answer:
+      "Yes! Flowva has an active community of tech enthusiasts, freelancers, and remote professionals. You can connect with others, discuss tools, get feedback, and collaborate with like-minded users, all while discovering new ways to optimize your workflow.",
+  },
+  {
+    question: "What rewards can I earn with Flowva?",
+    answer:
+      "All users earn basic rewards by using Flowva, with extra perks for Premium. Rewards come from completing simple tasks — trying recommended tools or sharing feedback — and can be redeemed for gift cards, cash, or community perks.",
+  },
+];
+
+export const footerLinks = [
+  {
+    title: "Hub",
+    links: [
+      { name: "Discover", href: "#" },
+      { name: "Library", href: "#" },
+      { name: "Rewards", href: "#" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { name: "About Us", href: "#" },
+      { name: "Blog", href: "#" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { name: "FAQ", href: "#" },
+      { name: "Contact Us", href: "#" },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { name: "Affiliate", href: "#" },
+      { name: "Influencer", href: "#" },
+      { name: "Referral", href: "#" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { name: "Terms and Conditions", href: "#" },
+      { name: "Privacy Policy", href: "#" },
+    ],
+  },
+];
+
+export const announcementData = {
+  text: "🚀Big news! The full Flowva experience + mobile apps are lunching soon on iOS S Android",
+  linkText: "Read more inside \u2192",
+  linkHref: "#",
+};
+
+export const focusCategories = [
+  { id: "marketing", name: "Sales & Marketing", iconKey: "target" },
+  { id: "social", name: "Social Media Management", iconKey: "smartphone" },
+  { id: "project", name: "Project Management", iconKey: "layoutDashboard" },
+  { id: "productivity", name: "Productivity", iconKey: "zap" },
 ];
