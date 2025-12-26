@@ -13,6 +13,8 @@ const GrowthCommunity = ({ viewMode }) => {
   const trackRef = useRef(null);
 
   useEffect(() => {
+    if (!containerRef.current || !trackRef.current) return;
+
     const ctx = gsap.context(() => {
       // Logic:
       // We have 5 cards. Visible viewport shows 3 cards.
@@ -45,6 +47,7 @@ const GrowthCommunity = ({ viewMode }) => {
 
       // Helper to update dimensions
       const updateDimensions = () => {
+        if (!trackRef.current || !trackRef.current.children[0]) return;
         const firstCard = trackRef.current.children[0];
         cardWidth = firstCard.offsetWidth;
         // Gap might be handled by flex gap, let's assume computed style or fix it.
@@ -95,7 +98,7 @@ const GrowthCommunity = ({ viewMode }) => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [viewMode]);
 
   return (
     <>
