@@ -61,7 +61,7 @@ const Rewards = () => {
 
   const handleClaim = async () => {
     await claimDailyStreak();
-    toast.success("Daily reward claimed! +5 points");
+    // Toast is handled in store for better error/success precision
   };
 
   const handleCopyLink = () => {
@@ -79,39 +79,41 @@ const Rewards = () => {
 
   // Generate dynamic week days based on streak
   const weekDays = days.map((day, index) => {
-    let status = "future";
+    let status = "future"; // 'checked', 'current', 'future'
 
-    // Logic:
-    // If index is today: check if claimedToday
-    // If index is before today: check if it falls within the current streak window
+    // Simple visual logic:
+    // We don't want to calculate exact dates here to avoid TZ bugs.
+    // Instead we visualize the streak count for the previous days ending yesterday/today.
 
-    if (index === todayIndex) {
-      status = claimedToday ? "current" : "future"; // 'current' usually means 'active/today', let's use check style
-      // Actually per design:
-      // 'checked' = past claim
-      // 'current' = today (active ring)
-      status = "current";
+    // If I claimed today, my streak is N. The Nth day (today) is checked. N-1 was yesterday.
+    // If I didn't claim today, my streak is M. Today is active (waiting). M days before were checked.
+
+    const isToday = index === todayIndex;
+
+    if (isToday) {
+      status = claimedToday ? "checked" : "current";
     } else if (index < todayIndex) {
-      // Past days
+      // Days before today in this week
+      // This is a rough visualization since streak can be 100 days (more than a week).
+      // We only want to show if they kept the streak *this week*.
+
+      // We assume for the "Current Week" UI, if streak > 0, they probably checked in yesterday etc.
+      // But accurate historical data requires fetching fetching 'last_checkin' or a calendar table.
+
+      // Let's use a simplified heuristic for better UX:
+      // If index is past day, and effective streak is high enough to cover it.
+
       const daysAgo = todayIndex - index;
-      // If claimed today, streak includes today. So previous days are covered if streak > daysAgo
-      // If not claimed today, streak ends yesterday (or before). So previous days covered if streak >= daysAgo
-
       const effectiveStreak = claimedToday ? streak : streak;
-      // Wait, if I haven't claimed today, my streak is say 5. That means yesterday, day before... were claimed.
-      // If I claimed today, my streak is 6. That include today.
 
-      // Let's simplified check:
-      // We assume strict consecutive streak for now.
-      if (claimedToday) {
-        if (streak > todayIndex - index) status = "checked";
-        else status = "missed";
+      // e.g. Today is Wed (2). Index Mon (0). daysAgo = 2.
+      // If streak is 5, then 5 >= 2, so Mon was checked.
+      // If streak is 1, then 1 < 2, so Mon was missed.
+
+      if (effectiveStreak >= daysAgo) {
+        status = "checked";
       } else {
-        // Not claimed today.
-        // Streak covers yesterday?
-        // if streak=1 (yesterday).
-        if (streak >= todayIndex - index) status = "checked";
-        else status = "missed";
+        status = "missed";
       }
     }
 
@@ -768,25 +770,25 @@ const Rewards = () => {
       </div>
       {/* Share Your Stack Modal */}
       {isShareModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md relative overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-xs shadow-xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
             {/* Close Button */}
             <button
               onClick={() => setIsShareModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             </button>
 
             {/* Content */}
-            <div className="p-8 text-center">
+            <div className="p-4 text-center">
               <h3 className="text-xl font-bold text-gray-900 mb-6">
                 Share Your Stack
               </h3>
 
-              <div className="flex flex-col items-center justify-center gap-4 py-8">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-[#9013fe]">
-                  <Layers className="w-8 h-8" />
+              <div className="flex flex-col items-center justify-center gap-4 ">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-[#9013fe]">
+                  <Layers className="w-5 h-5" />
                 </div>
                 <p className="text-gray-600 max-w-[250px] leading-relaxed text-sm">
                   You have no stack created yet, go to Tech Stack to create one.

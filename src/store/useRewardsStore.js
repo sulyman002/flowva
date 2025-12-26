@@ -19,40 +19,34 @@ export const useRewardsStore = create((set, get) => ({
 
     set({ userId: user.id });
 
-    // Fetch profile points
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("points")
-      .eq("id", user.id)
-      .single();
+    // ⚡ Optimized: Single RPC call to get all rewards state
+    const { data, error } = await supabase.rpc("get_user_rewards_state");
 
-    // Fetch streak
-    const { data: streak } = await supabase
-      .from("daily_streaks")
-      .select("current_streak, last_checkin")
-      .eq("user_id", user.id)
-      .single();
+    if (error) {
+      console.error("Error fetching rewards state:", error);
+      return;
+    }
 
-    // Fetch Referrals Stats
+    // Fetch Referrals separately (can be optimized later)
     const { data: referrals } = await supabase
       .from("referrals")
       .select("id")
       .eq("referrer_id", user.id);
 
-    // Calculate referral points (assuming 25 pts per referral)
-    // Ideally we sum from point_transactions or store in a separate column
-    // For now, let's just use count * 25 for display if not stored in profile
     const refCount = referrals?.length || 0;
 
-    const today = new Date().toISOString().slice(0, 10);
+    if (data && data.length > 0) {
+      const { current_points, current_streak_count, is_claimed_today } =
+        data[0];
 
-    set({
-      points: profile?.points ?? 0,
-      currentStreak: streak?.current_streak ?? 0,
-      claimedToday: streak?.last_checkin === today,
-      referralsCount: refCount,
-      referralPoints: refCount * 25,
-    });
+      set({
+        points: current_points,
+        currentStreak: current_streak_count,
+        claimedToday: is_claimed_today, // Trust the server!
+        referralsCount: refCount,
+        referralPoints: refCount * 25,
+      });
+    }
   },
 
   claimDailyStreak: async () => {
@@ -60,31 +54,48 @@ export const useRewardsStore = create((set, get) => ({
 
     set({ loading: true });
 
-    // 🔥 Optimistic UI
+    // ⚡ Optimistic Update (Better UX)
+    const previousState = {
+      points: get().points,
+      streak: get().currentStreak,
+      claimed: get().claimedToday,
+    };
+
     set((state) => ({
       claimedToday: true,
       currentStreak: state.currentStreak + 1,
       points: state.points + 5,
     }));
 
-    const { data, error } = await supabase.rpc("claim_daily_streak");
+    try {
+      const { data, error } = await supabase.rpc("claim_daily_streak");
 
-    console.log("Claim Response:", { data, error }); // Debug log
+      if (error) throw error;
 
-    if (error) {
+      if (data && data.length > 0) {
+        // ✅ Confirmed success - Sync with Server
+        const { current_points, current_streak_count, is_claimed_today } =
+          data[0];
+        set({
+          points: current_points,
+          currentStreak: current_streak_count,
+          claimedToday: is_claimed_today,
+        });
+        toast.success("Daily reward claimed! +5 points");
+      }
+    } catch (error) {
       console.error("Streak claim failed:", error);
-      toast.error(`Claim failed: ${error.message}`); // Notify user of error
-      // ❌ Rollback on failure
-      await get().fetchRewardsState();
-    } else if (data && data.length > 0) {
-      // ✅ Confirmed success - update with SERVER values
-      set({
-        currentStreak: data[0].current_streak,
-        points: data[0].points,
-        claimedToday: true,
-      });
-    }
+      toast.error(error.message || "Claim failed. Please try again.");
 
-    set({ loading: false });
+      // ❌ Rollback
+      set({
+        points: previousState.points,
+        currentStreak: previousState.streak,
+        claimedToday: previousState.claimed,
+      });
+      await get().fetchRewardsState(); // Force re-sync
+    } finally {
+      set({ loading: false });
+    }
   },
 }));

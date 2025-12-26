@@ -135,6 +135,16 @@ export const AuthProvider = ({ children }) => {
     return updateOnboardingState(userId);
   };
 
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    return { data, error };
+  };
+
   const value = {
     user,
     session,
@@ -145,6 +155,7 @@ export const AuthProvider = ({ children }) => {
     signOut,
     checkOnboardingStatus,
     setOnboardingComplete,
+    signInWithGoogle,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -13,7 +13,17 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const { signUp } = useAuth();
+  const { signUp, signInWithGoogle } = useAuth();
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await signInWithGoogle();
+      if (error) throw error;
+    } catch (error) {
+      console.error("Google login error:", error);
+      setError("Failed to initialize Google login.");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -191,7 +201,11 @@ const Signup = () => {
           </div>
         </div>
 
-        <button className="w-full flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700">
+        <button
+          onClick={handleGoogleLogin}
+          type="button"
+          className="w-full flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             className="w-5 h-5"

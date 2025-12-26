@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase/client";
+import { useAuth } from "../../context/AuthContext";
 import { CheckCircle2, XCircle } from "lucide-react";
 import PageLoader from "../../components/PageLoader";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
+  const { checkOnboardingStatus } = useAuth();
   const [status, setStatus] = useState("verifying"); // verifying, success, error
   const [message, setMessage] = useState("Verifying your account...");
 
   useEffect(() => {
     const handleAuth = async () => {
       try {
+        setMessage("Verifying authentication...");
         const {
           data: { session },
           error,
@@ -25,18 +28,40 @@ const AuthCallback = () => {
         }
 
         if (session) {
-          setStatus("success");
-          setMessage("Account Verified Successfully!");
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
+          // User is authenticated
+          setMessage("Checking user profile...");
+
+          // Wait a brief moment to ensure profile trigger might have run (for new users)
+          // or just proceed to check status logic
+
+          const userId = session.user.id;
+
+          setMessage("Checking onboarding status...");
+          const isOnboarded = await checkOnboardingStatus(userId);
+
+          if (isOnboarded) {
+            setMessage("Redirecting to dashboard...");
+            setTimeout(() => {
+              navigate("/dashboard", { replace: true });
+            }, 1500);
+          } else {
+            setMessage("Redirecting to onboarding...");
+            setTimeout(() => {
+              navigate("/onboarding", { replace: true });
+            }, 1500);
+          }
         } else {
+          // No session found? Check for hash params error
           const params = new URLSearchParams(window.location.hash.substring(1));
           if (params.get("error")) {
             setStatus("error");
             setMessage(
               params.get("error_description") || "Verification Failed"
             );
+          } else {
+            // No session and no error param -> likely just visited /auth/callback manually or token invalid
+            setStatus("error");
+            setMessage("No valid authentication session found.");
           }
         }
       } catch (e) {
@@ -48,14 +73,12 @@ const AuthCallback = () => {
 
     handleAuth();
 
+    // Also listen for immediate signed-in event if the above getSession is racing
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === "SIGNED_IN") {
-          setStatus("success");
-          setMessage("Account Verified Successfully!");
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
+      async (event, session) => {
+        if (event === "SIGNED_IN" && session) {
+          // We could potentially re-run logic here if the initial check failed or missed it
+          // But normally getSession handles it.
         }
       }
     );
@@ -63,10 +86,11 @@ const AuthCallback = () => {
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, [navigate, checkOnboardingStatus]);
 
-  if (status === "verifying") {
-    return <PageLoader />;
+  if (status === "verifying" || status === "success") {
+    // Show loader for both verifying AND success (which is effectively the redirecting phase now)
+    return <PageLoader message={message} />;
   }
 
   return (
@@ -74,44 +98,20 @@ const AuthCallback = () => {
       <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-sm w-full text-center">
         <h2 className="text-2xl font-bold text-purple-600 mb-6">Flowva</h2>
 
-        {status === "success" && (
-          <>
-            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle2 className="w-10 h-10 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Account Verified Successfully!
-            </h3>
-            <p className="text-gray-500 mb-6 text-sm">
-              Your Flowva account has been successfully verified. You can now
-              login.
-            </p>
-            <button
-              onClick={() => navigate("/login")}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-full transition-colors"
-            >
-              Continue to Login
-            </button>
-            <p className="mt-4 text-xs text-gray-400">
-              Redirecting in 3 seconds...
-            </p>
-          </>
-        )}
-
         {status === "error" && (
           <>
             <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
               <XCircle className="w-10 h-10 text-red-500" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Verification Link Expired
+              Authentication Failed
             </h3>
             <p className="text-gray-500 mb-6 text-sm">{message}</p>
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
               className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-full transition-colors"
             >
-              Resend Verification Link
+              Back to Login
             </button>
           </>
         )}

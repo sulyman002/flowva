@@ -53,7 +53,7 @@ const Header = () => {
           <div className="hidden md:flex items-center  z-50 relative">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer px-4">
-              <div className="w-32 h-32 flex items-center justify-center text-primary font-bold text-xl">
+              <div className="w-8 h-8 flex items-center justify-center text-primary font-bold text-xl">
                 <img src={flowva_logo} alt="" />
               </div>
             </div>

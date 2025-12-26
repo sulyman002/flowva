@@ -311,80 +311,79 @@ export const rewardsData = [
   },
 ];
 
-
 export const navLinks = [
-    {
-      name: "Hub",
-      hasDropdown: true,
-      items: [
-        {
-          title: "DISCOVER",
-          icon: <Compass className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-blue-400 to-blue-600",
-        },
-        {
-          title: "LIBRARY",
-          icon: <FileText className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-blue-300 to-purple-400",
-        },
-        {
-          title: "REWARD",
-          icon: <Coins className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-pink-300 to-pink-500",
-        },
-      ],
-    },
-    {
-      name: "Company",
-      hasDropdown: true,
-      items: [
-        {
-          title: "ABOUT US",
-          icon: <Info className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-500 to-indigo-600",
-        },
-        {
-          title: "BLOG",
-          icon: <MessageSquare className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-orange-300 to-purple-400",
-        },
-      ],
-    },
-    {
-      name: "Support",
-      hasDropdown: true,
-      items: [
-        {
-          title: "FAQ",
-          icon: <HelpCircle className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-pink-200 to-purple-300",
-        },
-        {
-          title: "CONTACT US",
-          icon: <Mail className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-300 to-blue-300",
-        },
-      ],
-    },
-    {
-      name: "Community",
-      hasDropdown: true,
-      items: [
-        {
-          title: "AFFILIATE",
-          icon: <Handshake className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-teal-300 to-blue-400",
-        },
-        {
-          title: "INFLUENCER",
-          icon: <Camera className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-gray-300 to-gray-500",
-        },
-        {
-          title: "REFER TO EARN",
-          icon: <Share2 className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-400 to-pink-400",
-        },
-      ],
-    },
-  ];
+  {
+    name: "Hub",
+    hasDropdown: true,
+    items: [
+      {
+        title: "DISCOVER",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-blue-400 to-blue-600",
+      },
+      {
+        title: "LIBRARY",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-blue-300 to-purple-400",
+      },
+      {
+        title: "REWARD",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-pink-300 to-pink-500",
+      },
+    ],
+  },
+  {
+    name: "Company",
+    hasDropdown: true,
+    items: [
+      {
+        title: "ABOUT US",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-purple-500 to-indigo-600",
+      },
+      {
+        title: "BLOG",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-orange-300 to-purple-400",
+      },
+    ],
+  },
+  {
+    name: "Support",
+    hasDropdown: true,
+    items: [
+      {
+        title: "FAQ",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-pink-200 to-purple-300",
+      },
+      {
+        title: "CONTACT US",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-purple-300 to-blue-300",
+      },
+    ],
+  },
+  {
+    name: "Community",
+    hasDropdown: true,
+    items: [
+      {
+        title: "AFFILIATE",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-teal-300 to-blue-400",
+      },
+      {
+        title: "INFLUENCER",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-gray-300 to-gray-500",
+      },
+      {
+        title: "REFER TO EARN",
+        icon: "w-12 h-12 text-white",
+        color: "bg-gradient-to-br from-purple-400 to-pink-400",
+      },
+    ],
+  },
+];
