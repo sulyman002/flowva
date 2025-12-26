@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import flowvaIcon from "../assets/flowva_logo.png";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
@@ -77,7 +78,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           {/* Logo */}
           <div className="px-7 py-2 my-2 flex justify-between items-center">
             <img
-              src="/assets/flowva_logo-xVpZI3-U.png"
+              src={flowvaIcon}
               alt="Flowva Logo"
               className="h-[40px] object-contain" // Adjusted height slightly
             />

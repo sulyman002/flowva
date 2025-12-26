@@ -11,12 +11,11 @@ import father_dev from "../assets/father_dev.svg";
 
 // How it works icons
 
-import subscribe from "../assets/subscribe.svg"
-import launch from "../assets/launch.svg"
-import speaker from "../assets/speaker.svg"
-import track from "../assets/track.svg"
-import crown from "../assets/crown.svg"
-
+import subscribe from "../assets/subscribe.svg";
+import launch from "../assets/launch.svg";
+import speaker from "../assets/speaker.svg";
+import track from "../assets/track.svg";
+import crown from "../assets/crown.svg";
 
 export const tabs = [
   { id: 1, icon: users_icon, title: "For users", viewMode: "users" },
@@ -189,55 +188,125 @@ export const howItWorksSteps = [
     id: 5,
     step: "Step 5",
     title: "Optional Premium Support",
-    description:
-      "Let the Flowva team run your features for maximum impact.",
+    description: "Let the Flowva team run your features for maximum impact.",
     bg: "#159481",
     image: crown,
     fullWidth: true,
   },
 ];
 
+export const testimonials = [
+  {
+    id: 1,
+    text: "Flowvahub makes finding tools effortless. Instead of wasting hours jumping between sites, I just open Discover Tools everything’s clear, organized, and right there. Feels less like searching, more like unlocking possibilities.",
+    name: "Ummaratu M.",
+    role: "Freelancer & Virtual Assistant",
+    color: "bg-[#60CFFF]", // Blue
+    emoji: "☕💜",
+  },
+  {
+    id: 2,
+    text: "Flowvahub is my new sidekick. It keeps my apps in line, my subs in check, and still finds a way to pay me in rewards. If it could make coffee, I’d marry it.",
+    name: "Adewale O.",
+    role: "Freelancer & Digital Creator",
+    color: "bg-[#FBFF64]", // Yellow
+    emoji: "",
+  },
+  {
+    id: 3,
+    text: "Didn’t even realise how much I was drowning in scattered tools until I saw Flowvahub. The idea of getting rewarded just for organizing my stack? That’s the kind of motivation I need.",
+    name: "Lois E.",
+    role: "Social media manager",
+    color: "bg-[#EE7DF9]", // Pink
+    emoji: "",
+  },
+  {
+    id: 4,
+    text: "The community aspect is what sold me. Seeing what tools other creators are using has saved me so much trial and error. It's properly curated.",
+    name: "Sarah J.",
+    role: "Product Designer",
+    color: "bg-[#A7F3D0]", // Green
+    emoji: "🚀",
+  },
+  {
+    id: 5,
+    text: "Finally a platform that gives back. I've discovered amazing tools I use daily now, and the rewards are just the cherry on top.",
+    name: "Michael R.",
+    role: "Indie Hacker",
+    color: "bg-[#FED7AA]", // Orange
+    emoji: "🔥",
+  },
+];
 
-
- export const testimonials = [
-    {
-      id: 1,
-      text: "Flowvahub makes finding tools effortless. Instead of wasting hours jumping between sites, I just open Discover Tools everything’s clear, organized, and right there. Feels less like searching, more like unlocking possibilities.",
-      name: "Ummaratu M.",
-      role: "Freelancer & Virtual Assistant",
-      color: "bg-[#60CFFF]", // Blue
-      emoji: "☕💜",
-    },
-    {
-      id: 2,
-      text: "Flowvahub is my new sidekick. It keeps my apps in line, my subs in check, and still finds a way to pay me in rewards. If it could make coffee, I’d marry it.",
-      name: "Adewale O.",
-      role: "Freelancer & Digital Creator",
-      color: "bg-[#FBFF64]", // Yellow
-      emoji: "",
-    },
-    {
-      id: 3,
-      text: "Didn’t even realise how much I was drowning in scattered tools until I saw Flowvahub. The idea of getting rewarded just for organizing my stack? That’s the kind of motivation I need.",
-      name: "Lois E.",
-      role: "Social media manager",
-      color: "bg-[#EE7DF9]", // Pink
-      emoji: "",
-    },
-    {
-      id: 4,
-      text: "The community aspect is what sold me. Seeing what tools other creators are using has saved me so much trial and error. It's properly curated.",
-      name: "Sarah J.",
-      role: "Product Designer",
-      color: "bg-[#A7F3D0]", // Green
-      emoji: "🚀",
-    },
-    {
-      id: 5,
-      text: "Finally a platform that gives back. I've discovered amazing tools I use daily now, and the rewards are just the cherry on top.",
-      name: "Michael R.",
-      role: "Indie Hacker",
-      color: "bg-[#FED7AA]", // Orange
-      emoji: "🔥",
-    },
-  ];
+export const rewardsData = [
+  {
+    id: 1,
+    title: "$5 Bank Transfer",
+    description: "The $5 equivalent will be transferred to your bank account.",
+    icon: "💸",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 2,
+    title: "$5 PayPal International",
+    description:
+      "Receive a $5 PayPal balance transfer directly to your PayPal account email.",
+    icon: "💸",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 3,
+    title: "$5 Virtual Visa Card",
+    description:
+      "Use your $5 prepaid card to shop anywhere Visa is accepted online.",
+    icon: "🎁",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 4,
+    title: "$5 Apple Gift Card",
+    description:
+      "Redeem this $5 Apple Gift Card for apps, games, music, movies, and more on the App Store and iTunes.",
+    icon: "🎁",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 5,
+    title: "$5 Google Play Card",
+    description:
+      "Use this $5 Google Play Gift Card to purchase apps, games, movies, books, and more on the Google Play Store.",
+    icon: "🎁",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 6,
+    title: "$5 Amazon Gift Card",
+    description:
+      "Get a $5 digital gift card to spend on your favorite tools or platforms.",
+    icon: "🎁",
+    points: 5000,
+    status: "Locked",
+  },
+  {
+    id: 7,
+    title: "$10 Amazon Gift Card",
+    description:
+      "Get a $10 digital gift card to spend on your favorite tools or platforms.",
+    icon: "🎁",
+    points: 10000,
+    status: "Locked",
+  },
+  {
+    id: 8,
+    title: "Free Udemy Course",
+    description: "Coming Soon!",
+    icon: "📚",
+    points: 0,
+    status: "Coming Soon",
+  },
+];

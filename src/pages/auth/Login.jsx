@@ -96,7 +96,7 @@ const Login = () => {
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-500 text-xs font-semibold uppercase hover:text-purple-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 text-[10px] font-semibold uppercase hover:text-purple-500 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Hide" : "Show"}

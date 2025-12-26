@@ -1,7 +1,7 @@
 import React from "react";
 import { Zap, Star, Shield } from "lucide-react";
 import { tabs } from "../data/data.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link  } from "react-router-dom";
 import { setItem } from "../utils/localStorage.js";
 import asana from "../assets/asana.svg";
 import chatgpt from "../assets/chatgpt.svg";
@@ -93,11 +93,11 @@ const Hero = ({ viewMode, setViewMode }) => {
                 viewMode === "users" ? "bg-white" : "bg-white "
               } `}
             >
-              <div class="cursor-pointer h-full flex items-center justify-center px-10 py-5  w-full whitespace-nowrap rounded-[100px] relative bg-[#111111] hover:bg-[#b362fae3] transition-all ease-linear duration-200 text-white shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset]">
+              <Link to="/signup"  class="cursor-pointer h-full flex items-center justify-center px-10 py-5  w-full whitespace-nowrap rounded-[100px] relative bg-[#111111] hover:bg-[#b362fae3] transition-all ease-linear duration-200 text-white shadow-[0px_2px_4px_0px_#0000001A,0px_6px_6px_0px_#00000017,0px_14px_9px_0px_#0000000D,0px_26px_10px_0px_#00000003,0px_40px_11px_0px_#00000000,-4px_13px_19px_0px_#ECD6FF80_inset]">
                 {viewMode === "users"
                   ? "Start Earning Today"
                   : "Partner With Us"}
-              </div>
+              </Link>
             </button>
           </div>
         </div>
