@@ -1,88 +1,111 @@
-Implementation Plan - Flowva Hub Clone
-Goal Description
-Clone the Flowva Hub website using React, Tailwind CSS, and JavaScript. The goal is to achieve a pixel-perfect (or as close as possible) replica of the landing page, including responsiveness and interactive elements.
+# Flowva Hub Clone
 
-User Review Required
-NOTE
+A modern, high-performance clone of the Flowva Hub platform, built to replicate its core functionality and aesthetic. This application provides a comprehensive dashboard for users to manage digital tools, track subscriptions, and earn rewards.
 
-I will be using standard lucide-react icons to approximate the custom icons found on the site unless user provides specific assets. The "Impact" font will be used for headings. Manrope will be used for body text.
+## 🚀 Features
 
-Proposed Changes
-Configuration
-[MODIFY] 
-tailwind.config.js
-Add custom colors:
-primary: #9013FE
-lavender: #F5EBFF
-mint: #E2FBE2
-cream: #FFF0F5
-yellow: #F7FF5D
-Add custom fonts:
-body: ['Manrope', 'sans-serif']
-heading: ['Impact', 'sans-serif']
-[MODIFY] 
-index.css
-Import 'Manrope' from Google Fonts.
-Set base styles.
-Dependencies
-Install lucide-react for icons.
-Install framer-motion (optional, but good for the floating animations if needed, otherwise CSS keyframes). Let's stick to CSS/Tailwind for simplicity unless complex.
-Components
-[NEW] 
-src/components/Header.jsx
-Sticky navbar with Logo, Navigation Links (Hub, Company, etc.), and Auth buttons.
-[NEW] 
-src/components/Hero.jsx
-Main headline section.
-"For users / For brands" toggle switch.
-Floating coin/app animations.
-[NEW] 
-src/components/StatsBar.jsx
-Horizontal purple bar with social proof numbers.
-[NEW] 
-src/components/Features.jsx
-"Everything in one place" carousel/grid section (Mint background).
-[NEW] 
-src/components/Benefits.jsx
-Split layout: Download app card (Pink) + Benefits checklist (Dark).
-[NEW] 
-src/components/HowItWorks.jsx
-"Simple, Rewarding, Calm" steps section (Lavender background).
-[NEW] 
-src/components/Footer.jsx
-Site links, newsletter signup, social icons.
-Pages
-[MODIFY] 
-src/App.jsx
-Assemble all components into the main landing page view.
-Home & Core Layout
-[MODIFY] 
-Home.jsx
-Lift activeTab state (Users/Brands) from Hero to Home.
-Pass viewMode to all child components.
-Components
-[MODIFY] 
-Hero.jsx
-Accept viewMode and setViewMode props.
-Render "For Brands" headline and CTAs when in brand mode.
-[MODIFY] 
-StatsBar.jsx
-Display brand-centric metrics (e.g., "Brands Partnered", "Campaigns", "Reach").
-[MODIFY] 
-Features.jsx
-Show brand features: "Targeting", "Analytics", "Promotion".
-[MODIFY] 
-Benefits.jsx
-Show brand benefits card and list.
-[MODIFY] 
-HowItWorks.jsx
-"Partner", "Scale", "Monetize" steps for brands.
-Verification Plan
-Automated Tests
-None planned for this visual clone phase.
-Manual Verification
-Responsiveness: Check mobile (375px), tablet (768px), and desktop (1440px) breakpoints.
-Visual Check: Compare implemented sections against the screenshots captured during research:
-Hero Section
-Feature Cards
-Interactivity: Verify Hover states on buttons and the "For users/brands" toggle functionality.
+- **Modern Dashboard**: A clean, responsive interface for managing user activities.
+- **Authentication**: Secure status-based authentication flow (Sign Up, Sign In) powered by Supabase.
+- **Rewards Hub**: Gamified system where users can view points, track progress, and redeem rewards.
+- **Tool Discovery**: Explore and add new tools to your personal library (currently in "Coming Soon" status).
+- **Subscription Management**: Track recurring expenses and renewal dates (currently in "Coming Soon" status).
+- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices using Tailwind CSS.
+- **Dynamic Data**: Centralized data management for easy content updates.
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite 7](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand) & React Context
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Backend / Auth**: [Supabase](https://supabase.com/)
+- **Animations**: CSS Transitions & Keyframes
+- **Notifications**: [Sonner](https://sonner.emilkowal.ski/)
+
+## 📦 Getting Started
+
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+- **Node.js**: Version 16.x or higher is recommended.
+- **npm** or **yarn**: Package manager for installing dependencies.
+
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/your-username/flowva-clone.git
+    cd flowva-clone
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Setup:**
+    Create a `.env` file in the root directory (if not already present) and add your Supabase credentials:
+    ```env
+    VITE_SUPABASE_URL=your_supabase_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+### Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173` (or the port shown in your terminal).
+
+### Building for Production
+
+To create a production-ready build:
+
+```bash
+npm run build
+```
+
+This commands compiles your application into the `dist` directory, optimizing it for performance.
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## 📂 Project Structure
+
+```text
+src/
+├── components/      # Reusable UI components (Header, Footer, Cards, etc.)
+├── context/         # React Context providers (AuthContext)
+├── data/            # Centralized static data (data.js)
+├── layout/          # Layout wrappers (FlowvaLayout)
+├── pages/           # Page components (Home, Onboarding, Login, Signup)
+│   └── dashboard/   # Dashboard sub-pages (DashboardHome, Rewards, etc.)
+├── App.jsx          # Main application component & Routing
+├── index.css        # Global styles & Tailwind directives
+└── main.jsx         # Entry point
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1.  Fork the project
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
