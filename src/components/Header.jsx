@@ -18,6 +18,8 @@ import {
 
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { navLinks } from "../data/data";
+import flowva_logo from "../assets/flowva_logo(blue).png"
 
 const Header = () => {
   const { user, signOut, onboardingComplete } = useAuth();
@@ -30,82 +32,7 @@ const Header = () => {
     navigate("/login");
   };
 
-  const navLinks = [
-    {
-      name: "Hub",
-      hasDropdown: true,
-      items: [
-        {
-          title: "DISCOVER",
-          icon: <Compass className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-blue-400 to-blue-600",
-        },
-        {
-          title: "LIBRARY",
-          icon: <FileText className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-blue-300 to-purple-400",
-        },
-        {
-          title: "REWARD",
-          icon: <Coins className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-pink-300 to-pink-500",
-        },
-      ],
-    },
-    {
-      name: "Company",
-      hasDropdown: true,
-      items: [
-        {
-          title: "ABOUT US",
-          icon: <Info className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-500 to-indigo-600",
-        },
-        {
-          title: "BLOG",
-          icon: <MessageSquare className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-orange-300 to-purple-400",
-        },
-      ],
-    },
-    {
-      name: "Support",
-      hasDropdown: true,
-      items: [
-        {
-          title: "FAQ",
-          icon: <HelpCircle className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-pink-200 to-purple-300",
-        },
-        {
-          title: "CONTACT US",
-          icon: <Mail className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-300 to-blue-300",
-        },
-      ],
-    },
-    {
-      name: "Community",
-      hasDropdown: true,
-      items: [
-        {
-          title: "AFFILIATE",
-          icon: <Handshake className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-teal-300 to-blue-400",
-        },
-        {
-          title: "INFLUENCER",
-          icon: <Camera className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-gray-300 to-gray-500",
-        },
-        {
-          title: "REFER TO EARN",
-          icon: <Share2 className="w-12 h-12 text-white" />,
-          color: "bg-gradient-to-br from-purple-400 to-pink-400",
-        },
-      ],
-    },
-  ];
+  
 
   return (
     <header className=" " onMouseLeave={() => setActiveDropdown(null)}>
@@ -126,38 +53,8 @@ const Header = () => {
           <div className="hidden md:flex items-center  z-50 relative">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer px-4">
-              <div className="w-8 h-8 flex items-center justify-center text-primary font-bold text-xl">
-                <span className="sr-only">Flowva</span>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-primary w-8 h-8"
-                >
-                  <path
-                    d="M12 2L2 7L12 12L22 7L12 2Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2 17L12 22L22 17"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2 12L12 17L22 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+              <div className="w-32 h-32 flex items-center justify-center text-primary font-bold text-xl">
+                <img src={flowva_logo} alt="" />
               </div>
             </div>
 

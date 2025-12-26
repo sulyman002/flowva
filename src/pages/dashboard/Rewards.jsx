@@ -65,7 +65,8 @@ const Rewards = () => {
   };
 
   const handleCopyLink = () => {
-    const link = `https://app.flowvahub.com/signup/?ref=${userId || "..."}`;
+    const origin = window.location.origin;
+    const link = `${origin}/signup?ref=${userId || "..."}`;
     navigator.clipboard.writeText(link);
     toast.success("Referral link copied to clipboard!");
   };
@@ -511,7 +512,7 @@ const Rewards = () => {
                               <input
                                 type="text"
                                 readOnly
-                                value={`https://app.flowvahub.com/signup/?ref=${
+                                value={`${window.location.origin}/signup?ref=${
                                   userId || "..."
                                 }`}
                                 className="w-full pr-10 px-3 py-2 text-sm bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -522,7 +523,7 @@ const Rewards = () => {
                                 className="absolute right-[10px] top-1/2 -translate-y-1/2 z-10 cursor-pointer"
                               >
                                 {/* Copy Icon */}
-                            <Copy size={16} className="text-[#9013fe]" />
+                                <Copy size={16} className="text-[#9013fe]" />
                               </button>
                             </div>
                           </div>
