@@ -176,14 +176,16 @@ $$;
 
 
 -- 5. User Creation Trigger
+-- 5. User Creation Trigger
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
-security definer
+security definer set search_path = public
 as $$
 begin
   insert into public.profiles (id, email, points, streak)
-  values (new.id, new.email, 0, 0);
+  values (new.id, new.email, 0, 0)
+  on conflict (id) do nothing;
   return new;
 end;
 $$;
